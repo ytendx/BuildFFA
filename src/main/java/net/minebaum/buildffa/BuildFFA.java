@@ -13,11 +13,6 @@ public class BuildFFA extends JavaPlugin {
 
     private static BuildFFA plugin;
     private static Game g;
-    private static MySQLConnector connector;
-
-    public static MySQLConnector getConnector() {
-        return connector;
-    }
 
     public static Game getGame() {
         return g;
@@ -35,8 +30,6 @@ public class BuildFFA extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        connector = new MySQLConnector("web7447.cweb03.gamingweb.de", 3306, "buildffastats", "mok1382", "Ce6xNmK1O1theJAk");
-        connector.connect();
         //this.getServer().getConsoleSender().sendMessage("[BuildFFA] Plugin Enabled!");
         GameManagement.setupGame();
         g = GameManagement.getGame();
