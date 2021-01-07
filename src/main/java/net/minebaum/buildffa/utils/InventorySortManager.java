@@ -21,7 +21,7 @@ public class InventorySortManager {
         this.p = player;
     }
 
-    public void set(){
+    public void set(Inventory inv){
 
     }
 

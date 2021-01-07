@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class LocationManager {
 
-    public static File file = new File("plugins//Lobby//locations.yml");
+    public static File file = new File("plugins//BuildFFA//locations.yml");
     public static YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
     public static void setLocation(String name, Location loc) throws IOException {

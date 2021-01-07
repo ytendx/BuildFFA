@@ -1,14 +1,11 @@
 package net.minebaum.buildffa;
 
-import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.game.Game;
-import net.minebaum.baumapi.game.GameState;
-import net.minebaum.baumapi.game.Stats;
 import net.minebaum.baumapi.mysql.MySQLConnector;
 import net.minebaum.buildffa.commands.COMMAND_Setup;
+import net.minebaum.buildffa.listeners.EntityDamageListener;
 import net.minebaum.buildffa.listeners.JoinListener;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,6 +47,7 @@ public class BuildFFA extends JavaPlugin {
         // LISTENERS
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new JoinListener(), this);
+        pm.registerEvents(new EntityDamageListener(), this);
         //COMMANDS
         getCommand("setup").setExecutor(new COMMAND_Setup());
     }
