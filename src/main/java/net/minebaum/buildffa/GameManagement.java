@@ -1,13 +1,9 @@
 package net.minebaum.buildffa;
 
-import net.minebaum.baumapi.BaumAPI;
-import net.minebaum.baumapi.game.Game;
-import net.minebaum.baumapi.game.GameState;
-import net.minebaum.baumapi.game.Stats;
-import net.minebaum.baumapi.game.StatsType;
+import net.minebaum.baumapi.coinapi.Coins;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
-import net.minebaum.buildffa.utils.game.MySQLConnector;
+import net.minebaum.buildffa.utils.game.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -19,6 +15,7 @@ public class GameManagement {
     private static StatsType[] statsTypes;
     private static HashMap<Player, KitInventoryMerger> mainSaver;
     private static MySQLConnector connector;
+    private static Coins buildFFACoins;
 
     public static MySQLConnector getConnector() {
         return connector;
@@ -41,7 +38,7 @@ public class GameManagement {
         statsTypes[1] = StatsType.KILLS;
         statsTypes[2] = StatsType.DEATHS;
         statsTypes[3] = StatsType.KD;
-        g = new Game(BaumAPI.getPlugin(),
+        g = new Game(BuildFFA.getPlugin(),
                 "BuildFFA",
                 "§e§lBuildFFA",
                 new Stats(statsTypes,
