@@ -33,7 +33,7 @@ public class StandartKit extends Kit {
 
     @Override
     public void setItemStacksToInventory(Player player) {
-        for(int i = 0; i < 3; i++)
-            player.getInventory().setItem();
+        for(int i = 1; i < 3; i++)
+            player.getInventory().setItem(i, itemStackList[i-1]);
     }
 }

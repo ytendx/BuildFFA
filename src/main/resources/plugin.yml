@@ -1,0 +1,5 @@
+name: MineBaum-BuildFFA
+version: 1.0
+main: net.minebaum.buildffa.BuildFFA
+commands:
+  setup:

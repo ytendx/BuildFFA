@@ -37,10 +37,13 @@ public class BuildFFA extends JavaPlugin {
     public void onEnable() {
         connector = new MySQLConnector("web7447.cweb03.gamingweb.de", 3306, "buildffastats", "mok1382", "Ce6xNmK1O1theJAk");
         connector.connect();
-        this.getServer().getConsoleSender().sendMessage("[BuildFFA] Plugin Enabled!");
+        //this.getServer().getConsoleSender().sendMessage("[BuildFFA] Plugin Enabled!");
         GameManagement.setupGame();
         g = GameManagement.getGame();
         register();
+
+
+        this.getServer().getConsoleSender().sendMessage("[BuildFFA] Plugin Enabled!");
     }
 
     private void register() {

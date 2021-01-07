@@ -5,13 +5,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Kit {
 
     private ItemStack[] itemStackList;
-    private ArrayList<Player> user;
+    private HashMap<Player, Kit> user = new HashMap<Player, Kit>();
 
-    public ArrayList<Player> getUser() {
+    public HashMap<Player, Kit> getUser() {
         return user;
     }
 
@@ -22,12 +23,12 @@ public abstract class Kit {
     public abstract void setup();
     public abstract void setItemStacksToInventory(Player player);
 
-    public void addUser(Player player){
-
+    public void addUser(Player player, Kit kit){
+        user.put(player, kit);
     }
 
     public void removeUser(Player player){
-
+        user.remove(player);
     }
 
 }

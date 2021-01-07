@@ -28,7 +28,11 @@ public class JoinListener implements Listener {
         }
 
         Player p = e.getPlayer();
-        p.teleport(LocationManager.getLocation("spawn"));
+        try {
+            p.teleport(LocationManager.getLocation("spawn"));
+        }catch (Exception e1){
+            BaumAPI.getPlugin().getServer().getConsoleSender().sendMessage(e1.getMessage());
+        }
 
         ScoreboardAPI api = new ScoreboardAPI(BaumAPI.getPlugin(), "§c§lMineBaum§f.§c§lnet");
         api.addType("", "");
