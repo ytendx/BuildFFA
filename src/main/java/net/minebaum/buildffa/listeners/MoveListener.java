@@ -38,13 +38,7 @@ public class MoveListener implements Listener {
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
             }
         }else if(p.getLocation().getY() >= 90){
-            if(getted2.contains(p)){
-                return;
-            }else{
-                getted2.add(p);
-                p.getInventory().clear();
-                // TODO
-            }
+
         }
     }
 

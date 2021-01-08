@@ -45,6 +45,8 @@ public class BuildFFA extends JavaPlugin {
         pm.registerEvents(new DeathsListener(), this);
         pm.registerEvents(new MoveListener(), this);
         pm.registerEvents(new BlockPlaceListener(), this);
+        pm.registerEvents(new InteractListener(), this);
+        pm.registerEvents(new InventoryListener(), this);
         //COMMANDS
         getCommand("setup").setExecutor(new COMMAND_Setup());
     }

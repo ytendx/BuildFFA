@@ -36,7 +36,11 @@ public class KitManager {
         ArrayList<String> lore2 = new ArrayList<String>();
         lore2.add("§7Dies sind nützliche Hilfsmittel.");
         inv.setItem(11, new ItemBuilder(Material.CHEST, 1, (short) 0).setDisplayname("§eKits").setLore(lore1).build());
-        inv.setItem(13, new ItemBuilder(Material.ENDER_PEARL, 1, (short) 0).setDisplayname("§eGadgets").setLore().build());
+        inv.setItem(13, new ItemBuilder(Material.ENDER_PEARL, 1, (short) 0).setDisplayname("§eGadgets").setLore(lore2).build());
+
+
+
+        player.openInventory(inv);
     }
 
 

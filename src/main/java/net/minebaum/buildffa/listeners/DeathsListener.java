@@ -4,6 +4,7 @@ import net.minebaum.baumapi.api.ActionbarAPI;
 import net.minebaum.baumapi.utils.Data;
 import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.LocationManager;
+import net.minebaum.buildffa.utils.ScoreboardManagerAB;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +32,7 @@ public class DeathsListener implements Listener {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 1, 1);
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 1, 1);
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
+        ScoreboardManagerAB.sendScoreboard(p);
     }
 
 }

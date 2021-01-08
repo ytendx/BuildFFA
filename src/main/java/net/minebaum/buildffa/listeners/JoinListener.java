@@ -50,6 +50,8 @@ public class JoinListener implements Listener {
         p.setHealth(6);
         p.setFoodLevel(20);
 
+        GameManagement.setInvItems(p);
+
         e.setJoinMessage("§8[§a+§8] §7" + e.getPlayer().getName());
 
     }
