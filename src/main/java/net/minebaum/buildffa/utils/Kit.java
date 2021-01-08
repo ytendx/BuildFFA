@@ -11,6 +11,7 @@ public abstract class Kit {
 
     private ItemStack[] itemStackList;
     private HashMap<Player, Kit> user = new HashMap<Player, Kit>();
+    public abstract String getName();
 
     public HashMap<Player, Kit> getUser() {
         return user;

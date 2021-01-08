@@ -16,6 +16,11 @@ public class StandartKit extends Kit {
     private ArrayList<Player> user;
 
     @Override
+    public String getName() {
+        return "StandartKit";
+    }
+
+    @Override
     public void setup() {
         itemStackList = new ItemStack[3];
         itemStackList[0] = new ItemBuilder(Material.STICK, 1, (short) 0)

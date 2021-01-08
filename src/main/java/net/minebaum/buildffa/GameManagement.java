@@ -1,9 +1,15 @@
 package net.minebaum.buildffa;
 
+import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.coinapi.Coins;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
+import net.minebaum.buildffa.utils.KitInventoryMerger;
+import net.minebaum.buildffa.utils.KitManager;
 import net.minebaum.buildffa.utils.game.*;
+import net.minebaum.buildffa.utils.game.states.IngameState;
+import net.minebaum.buildffa.utils.game.states.MapSwitchState;
+import net.minebaum.buildffa.utils.game.states.StatesManager;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -16,6 +22,15 @@ public class GameManagement {
     private static HashMap<Player, KitInventoryMerger> mainSaver;
     private static MySQLConnector connector;
     private static Coins buildFFACoins;
+    private static KitManager kitManager;
+
+    public static HashMap<Player, KitInventoryMerger> getMainSaver() {
+        return mainSaver;
+    }
+
+    public static Coins getBuildFFACoins() {
+        return buildFFACoins;
+    }
 
     public static MySQLConnector getConnector() {
         return connector;
@@ -32,6 +47,12 @@ public class GameManagement {
         }catch (Exception e){
             e.printStackTrace();
         }
+        gameStates = new GameState[2];
+        gameStates[StatesManager.INGAME_STATE] = new IngameState();
+        gameStates[StatesManager.MAP_CHANGE_STATE] = new MapSwitchState();
+        gameStateIDs = new int[gameStates.length];
+        gameStateIDs[StatesManager.INGAME_STATE] = 0;
+        gameStateIDs[StatesManager.MAP_CHANGE_STATE] = 1;
         String[] teams = new String[50];
         statsTypes = new StatsType[4];
         statsTypes[0] = StatsType.POINTS;
@@ -50,43 +71,14 @@ public class GameManagement {
         gameStateIDs = new int[1];
         gameStates = new GameState[gameStateIDs.length];
         g.setup(gameStateIDs, gameStates);
+        buildFFACoins = new Coins(BaumAPI.getPlugin());
+        buildFFACoins.setupMySQL("mok1382", "Ce6xNmK1O1theJAk", "web7447.cweb03.gamingweb.de", 3306, "buildffastats");
+        buildFFACoins.setup(0);
+        g.setCurrentGameState(gameStates[StatesManager.INGAME_STATE]);
     }
 
     public static void endServer(){
         //BuildFFA.getConnector().update("INSERT ");
-    }
-
-}
-
-class KitInventoryMerger{
-    private Kit kit;
-    private InventorySortManager inventorySortManager;
-    private Player player;
-
-    public KitInventoryMerger(Player player, InventorySortManager inventorySortManager, Kit kit){
-        this.player = player;
-        this.inventorySortManager = inventorySortManager;
-        this.kit = kit;
-    }
-
-    public InventorySortManager getInventorySortManager() {
-        return inventorySortManager;
-    }
-
-    public Kit getKit() {
-        return kit;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setKit(Kit kit) {
-        this.kit = kit;
-    }
-
-    public void setInventorySortManager(InventorySortManager inventorySortManager) {
-        this.inventorySortManager = inventorySortManager;
     }
 
 }

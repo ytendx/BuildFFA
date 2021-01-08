@@ -36,7 +36,7 @@ public class Stats {
         return false;
     }
 
-    public void setup(Player player) {
+    public void setup() {
         String updateTypeSet = "";
         for(StatsType all : types) {
             switch (all) {

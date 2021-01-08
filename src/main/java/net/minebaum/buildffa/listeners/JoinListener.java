@@ -4,7 +4,11 @@ import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ScoreboardAPI;
 import net.minebaum.buildffa.BuildFFA;
 import net.minebaum.buildffa.GameManagement;
+import net.minebaum.buildffa.utils.InventorySortManager;
+import net.minebaum.buildffa.utils.KitInventoryMerger;
 import net.minebaum.buildffa.utils.LocationManager;
+import net.minebaum.buildffa.utils.ScoreboardManagerAB;
+import net.minebaum.buildffa.utils.kits.StandartKit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,9 +35,20 @@ public class JoinListener implements Listener {
             BuildFFA.getPlugin().getServer().getConsoleSender().sendMessage(e1.getMessage());
         }
 
-        ScoreboardAPI api = new ScoreboardAPI(BaumAPI.getPlugin(), "§c§lMineBaum§f.§c§lnet");
-        api.addType("Name", p.getName());
-        api.send(e.getPlayer());
+        try {
+            if(!GameManagement.getMainSaver().containsKey(p)){
+                GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(p), new StandartKit()));
+            }
+        }catch (Exception e2){
+            System.err.println("FEHLER IN JoinListener Exception e2! >>");
+            e2.printStackTrace();
+        }
+
+        ScoreboardManagerAB.sendScoreboard(p);
+
+        p.setMaxHealth(6);
+        p.setHealth(6);
+        p.setFoodLevel(20);
 
         e.setJoinMessage("§8[§a+§8] §7" + e.getPlayer().getName());
 

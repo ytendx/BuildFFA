@@ -1,10 +1,9 @@
 package net.minebaum.buildffa;
 
 import net.minebaum.buildffa.commands.COMMAND_Setup;
-import net.minebaum.buildffa.listeners.DeathsListener;
-import net.minebaum.buildffa.listeners.EntityDamageListener;
-import net.minebaum.buildffa.listeners.JoinListener;
+import net.minebaum.buildffa.listeners.*;
 import net.minebaum.buildffa.utils.game.Game;
+import net.minebaum.buildffa.utils.game.states.StatesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,7 +34,6 @@ public class BuildFFA extends JavaPlugin {
         g = GameManagement.getGame();
         register();
 
-
         this.getServer().getConsoleSender().sendMessage("[BuildFFA] Plugin Enabled!");
     }
 
@@ -45,6 +43,8 @@ public class BuildFFA extends JavaPlugin {
         pm.registerEvents(new JoinListener(), this);
         pm.registerEvents(new EntityDamageListener(), this);
         pm.registerEvents(new DeathsListener(), this);
+        pm.registerEvents(new MoveListener(), this);
+        pm.registerEvents(new BlockPlaceListener(), this);
         //COMMANDS
         getCommand("setup").setExecutor(new COMMAND_Setup());
     }
