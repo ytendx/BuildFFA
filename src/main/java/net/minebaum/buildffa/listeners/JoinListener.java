@@ -4,11 +4,9 @@ import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ScoreboardAPI;
 import net.minebaum.buildffa.BuildFFA;
 import net.minebaum.buildffa.GameManagement;
-import net.minebaum.buildffa.utils.InventorySortManager;
-import net.minebaum.buildffa.utils.KitInventoryMerger;
-import net.minebaum.buildffa.utils.LocationManager;
-import net.minebaum.buildffa.utils.ScoreboardManagerAB;
+import net.minebaum.buildffa.utils.*;
 import net.minebaum.buildffa.utils.kits.StandartKit;
+import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,6 +27,12 @@ public class JoinListener implements Listener {
         }
 
         Player p = e.getPlayer();
+        p.getInventory().clear();
+
+        if(!GagetsManager.gadget.containsKey(p)){
+            GagetsManager.gadget.put(p, null);
+        }
+
         try {
             p.teleport(LocationManager.getLocation("spawn"));
         }catch (Exception e1){
@@ -38,6 +42,7 @@ public class JoinListener implements Listener {
         try {
             if(!GameManagement.getMainSaver().containsKey(p)){
                 GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(p), new StandartKit()));
+                GameManagement.getMainSaver().get(p).getKit().setup();
             }
         }catch (Exception e2){
             System.err.println("FEHLER IN JoinListener Exception e2! >>");
@@ -52,12 +57,18 @@ public class JoinListener implements Listener {
 
         GameManagement.setInvItems(p);
 
+        SpecHandler.update();
+
         e.setJoinMessage("§8[§a+§8] §7" + e.getPlayer().getName());
 
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
+        MoveListener.getted.remove(e.getPlayer());
+        if(SpecHandler.getSpecs().contains(e.getPlayer())){
+            SpecHandler.setSpecs(e.getPlayer());
+        }
         e.setQuitMessage("§8[§c-§8] §7" + e.getPlayer().getName());
     }
 

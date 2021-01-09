@@ -13,7 +13,7 @@ public class EntityDamageListener implements Listener {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e){
         if(e.getEntity().getType() == EntityType.PLAYER){
-            if(e.getEntity().getLocation().getY() >= 90){
+            if(e.getEntity().getLocation().getY() >= 195){
                 e.setDamage(0);
                 e.setCancelled(true);
                 new ActionbarAPI("§cDas darfst du hier nicht!", (Player) e.getDamager()).send();

@@ -10,17 +10,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BlockPlaceListener implements Listener {
 
+    public static ArrayList<Location> userblocks = new ArrayList<>();
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e){
         Player p = e.getPlayer();
-        if(p.getLocation().getY() >= 90){
+        if(p.getLocation().getY() >= 195){
             e.setBuild(false);
         }else{
             Location loc = e.getBlock().getLocation();
+            userblocks.add(loc);
             Bukkit.getScheduler().runTaskLater(BuildFFA.getPlugin(), new Runnable() {
                 @Override
                 public void run() {
@@ -29,6 +33,7 @@ public class BlockPlaceListener implements Listener {
                         @Override
                         public void run() {
                             e.getBlock().setType(Material.AIR);
+                            userblocks.remove(loc);
                         }
                     }, 20*2);
                 }

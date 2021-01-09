@@ -13,7 +13,6 @@ import net.minebaum.buildffa.utils.game.states.MapSwitchState;
 import net.minebaum.buildffa.utils.game.states.StatesManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
 import java.util.HashMap;
 
 public class GameManagement {
@@ -84,11 +83,12 @@ public class GameManagement {
         buildFFACoins = new Coins(BaumAPI.getPlugin());
         buildFFACoins.setupMySQL("mok1382", "Ce6xNmK1O1theJAk", "web7447.cweb03.gamingweb.de", 3306, "buildffastats");
         buildFFACoins.setup(0);
+        kitManager = new KitManager();
         g.setCurrentGameState(gameStates[StatesManager.INGAME_STATE]);
     }
 
     public static void setInvItems(Player player){
-        player.getInventory().setItem(8, new ItemBuilder(Material.ENDER_CHEST, 1, (short) 0).setDisplayname("§eKits und Gadgests").build());
+        player.getInventory().setItem(8, new ItemBuilder(Material.ENDER_CHEST, 1, (short) 0).setDisplayname("§eKits und Gadgets").build());
     }
 
     public static void endServer(){

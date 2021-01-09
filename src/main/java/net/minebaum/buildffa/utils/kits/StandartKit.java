@@ -2,6 +2,7 @@ package net.minebaum.buildffa.utils.kits;
 
 import net.minebaum.baumapi.utils.ItemBuilder;
 import net.minebaum.buildffa.utils.Kit;
+import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -33,12 +34,14 @@ public class StandartKit extends Kit {
                 .build();
         itemStackList[2] = new ItemBuilder(Material.SANDSTONE, 64, (short) 0)
                 .setDisplayname("§cBlöcke").build();
-
     }
 
     @Override
     public void setItemStacksToInventory(Player player) {
-        for(int i = 1; i < 3; i++)
-            player.getInventory().setItem(i, itemStackList[i-1]);
+        if(SpecHandler.getSpecs().contains(player)){
+            return;
+        }
+        for(int i = 1; i <= 3; i++)
+            player.getInventory().setItem(i-1, itemStackList[i-1]);
     }
 }
