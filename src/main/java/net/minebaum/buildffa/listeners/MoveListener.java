@@ -29,9 +29,13 @@ public class MoveListener implements Listener {
     public void onMove(final PlayerMoveEvent e){
         final Player p = e.getPlayer();
         if(p.getLocation().getY() <= 1){
+            if(SpecHandler.getSpecs().contains(p)){
+                p.teleport(LocationManager.getLocation("spawn"));
+                return;
+            }
             Player killer = p.getKiller();
             boolean didAlreadeShouted = false;
-            if(killer != null){
+            if(killer != null && !SpecHandler.getSpecs().contains(killer)){
                 killer.sendMessage(Data.PREFIX + "§e+ 10 Coins");
                 killer.playSound(killer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 Bukkit.broadcastMessage(Data.PREFIX + "§e" + p.getName() + " §7wurde von §e" + killer.getName() + " §7ins leere geschubst.");

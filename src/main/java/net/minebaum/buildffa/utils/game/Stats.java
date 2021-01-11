@@ -2,6 +2,7 @@ package net.minebaum.buildffa.utils.game;
 
 import org.bukkit.entity.Player;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 
 public class Stats {
@@ -66,7 +67,9 @@ public class Stats {
         game.sCMSG("Setuped Stats Database!");
     }
 
-
+    public void set(StatsType type, Player player, int value){
+        
+    }
 
     public void createAccount(Player player) {
         boolean exist = false;

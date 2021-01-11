@@ -52,6 +52,7 @@ public class BuildFFA extends JavaPlugin {
         pm.registerEvents(new DamageListener(), this);
         pm.registerEvents(new WeatherChangeListener(), this);
         pm.registerEvents(new MobSpawnListener(), this);
+        pm.registerEvents(new DropListener(), this);
         //COMMANDS
         getCommand("setup").setExecutor(new COMMAND_Setup());
         getCommand("spec").setExecutor(new COMMAND_Spec());

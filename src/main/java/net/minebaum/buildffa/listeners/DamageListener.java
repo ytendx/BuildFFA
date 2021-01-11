@@ -8,9 +8,6 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent e){
-        if(e.getEntity().getLocation().getY() >= 195){
-            e.setCancelled(true);
-        }
         if(e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
             e.setCancelled(true);
         }

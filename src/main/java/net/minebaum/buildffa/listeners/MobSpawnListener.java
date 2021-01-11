@@ -9,7 +9,7 @@ public class MobSpawnListener implements Listener {
 
     @EventHandler
     public void onSpawn(EntitySpawnEvent e){
-        if(e.getEntity().getType().equals(EntityType.PLAYER)){
+        if(e.getEntity().getType().equals(EntityType.PLAYER) || e.getEntity().getType().equals(EntityType.SNOWBALL)){
             e.setCancelled(false);
         }else{
             e.setCancelled(true);

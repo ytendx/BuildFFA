@@ -41,10 +41,13 @@ public class InventoryListener implements Listener {
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.ENDERPERLE);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget die Enderperle ausgewählt.");
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§fSchnebälle")){
+            }else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("§fSchne")){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.SNOWBALL);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget Schneebälle ausgewählt.");
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+            }
+            if(e.getInventory().getTitle().equalsIgnoreCase("§eKits und Gadgets")){
+                e.setCancelled(true);
             }
         }
     }

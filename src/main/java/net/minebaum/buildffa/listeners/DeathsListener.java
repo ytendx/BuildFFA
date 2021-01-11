@@ -5,6 +5,7 @@ import net.minebaum.baumapi.utils.Data;
 import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.LocationManager;
 import net.minebaum.buildffa.utils.ScoreboardManagerAB;
+import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,6 +21,9 @@ public class DeathsListener implements Listener {
     public void onDeath(PlayerDeathEvent e){
         Player p = (Player) e.getEntity();
         Player killer = p.getKiller();
+        if(SpecHandler.getSpecs().contains(killer)){
+            e.setDeathMessage(Data.PREFIX + "§e" + p.getName() + " ist gestorben.");
+        }else
         e.setDeathMessage(Data.PREFIX + "§e" + p.getName() + " §7wurde von §e" + killer.getName() + " §7getötet.");
         killer.sendMessage(Data.PREFIX + "§e+ 10 Coins");
         new ActionbarAPI("§e+ §610 §7Coins", killer).send();
