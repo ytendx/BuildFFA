@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -11,7 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class BlockBreakListener implements Listener {
 
     @EventHandler
-    public void onBreak(BlockBreakEvent e){
+    public void onBreak(final BlockBreakEvent e){
         Player p = e.getPlayer();
         if(e.getPlayer().getLocation().getY() >= 195){
             e.setCancelled(true);

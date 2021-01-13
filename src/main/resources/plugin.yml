@@ -4,3 +4,4 @@ main: net.minebaum.buildffa.BuildFFA
 commands:
   setup:
   spec:
+  teaming:

@@ -21,7 +21,7 @@ public abstract class Kit {
         return itemStackList;
     }
 
-    public abstract void setup();
+    public abstract Kit setup();
     public abstract void setItemStacksToInventory(Player player);
 
     public void addUser(Player player, Kit kit){

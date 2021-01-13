@@ -8,8 +8,8 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 public class FoodChangeListener implements Listener {
 
     @EventHandler
-    public void onFoodChange(FoodLevelChangeEvent e){
-        Player p = (Player) e.getEntity();
+    public void onFoodChange(final FoodLevelChangeEvent e){
+        final Player p = (Player) e.getEntity();
         if(p.getLocation().getY() >= 195){
             e.setCancelled(true);
             e.setFoodLevel(20);

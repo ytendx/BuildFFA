@@ -6,27 +6,24 @@ import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-
-public class StandartKit extends Kit {
+public class AngreiferKit extends Kit {
 
     private ItemStack[] itemStackList;
-    private ArrayList<Player> user;
 
     @Override
     public String getName() {
-        return "StandartKit";
+        return "AngreiferKit";
     }
 
     @Override
-    public StandartKit setup() {
+    public Kit setup() {
         itemStackList = new ItemStack[3];
-        itemStackList[0] = new ItemBuilder(Material.STICK, 1, (short) 0)
-                .setDisplayname("§eKnockback-Stick")
-                .addEnchantment(Enchantment.KNOCKBACK, 3)
+        itemStackList[0] = new ItemBuilder(Material.IRON_SWORD, 1, (short) 0)
+                .setDisplayname("§eSchwert")
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES).build();
         itemStackList[1] = new ItemBuilder(Material.WOOD_PICKAXE, 1, (short) 0)
                 .setDisplayname("§cSpitzhacke")

@@ -16,7 +16,7 @@ import java.util.Date;
 public class EntityDamageListener implements Listener {
 
     @EventHandler
-    public void onHit(EntityDamageByEntityEvent e){
+    public void onHit(final EntityDamageByEntityEvent e){
         if(e.getEntity().getType() == EntityType.PLAYER){
             if(SpecHandler.getSpecs().contains((Player) e.getDamager())){
                 if(e.getDamager().hasPermission("system.spec.check")){
@@ -24,9 +24,6 @@ public class EntityDamageListener implements Listener {
                 }else{
                     e.setCancelled(true);
                 }
-                TemporalField tp = null;
-                long l = LocalDateTime.now().getLong(tp);
-                Date date = new Date(l);
             }
             if(e.getEntity().getLocation().getY() >= 195){
                 e.setDamage(0);

@@ -13,7 +13,7 @@ import java.util.Locale;
 public class COMMAND_Setup implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        Player p = (Player) commandSender;
+        final Player p = (Player) commandSender;
         if(!(commandSender instanceof Player)) {return true;}
         if(strings.length == 0 || strings.length > 1) {p.sendMessage(Data.PREFIX + "§cNutze: /setup <Location>"); return true;}
         if(!(p.hasPermission("system.setup"))) {p.sendMessage(Data.NOPERMS); return true;}

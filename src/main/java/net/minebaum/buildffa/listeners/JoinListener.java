@@ -2,23 +2,26 @@ package net.minebaum.buildffa.listeners;
 
 import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ScoreboardAPI;
+import net.minebaum.baumapi.utils.Data;
 import net.minebaum.buildffa.BuildFFA;
 import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.*;
 import net.minebaum.buildffa.utils.kits.StandartKit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 public class JoinListener implements Listener {
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e){
+    public void onJoin(final PlayerJoinEvent e){
 
         try {
             GameManagement.getGame().getStats().createAccount(e.getPlayer());
@@ -26,7 +29,7 @@ public class JoinListener implements Listener {
             GameManagement.getGame().sCMSG("[BuildFFA] Create Stats Account failed!");
         }
 
-        Player p = e.getPlayer();
+        final Player p = e.getPlayer();
         p.getInventory().clear();
 
         if(!GagetsManager.gadget.containsKey(p)){
@@ -41,7 +44,7 @@ public class JoinListener implements Listener {
 
         try {
             if(!GameManagement.getMainSaver().containsKey(p)){
-                GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(p), new StandartKit()));
+                GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new StandartKit()));
                 GameManagement.getMainSaver().get(p).getKit().setup();
             }
         }catch (Exception e2){
@@ -49,7 +52,6 @@ public class JoinListener implements Listener {
             e2.printStackTrace();
         }
 
-        ScoreboardManagerAB.sendScoreboard(p);
 
         p.setMaxHealth(6);
         p.setHealth(6);
@@ -59,7 +61,17 @@ public class JoinListener implements Listener {
 
         SpecHandler.update();
 
-        e.setJoinMessage("§8[§a+§8] §7" + e.getPlayer().getName());
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            ScoreboardManagerAB.setScoreboard(p);
+        });
+        Bukkit.getScheduler().runTaskTimerAsynchronously(BuildFFA.getPlugin(), () -> {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                ScoreboardManagerAB.updateTab(player);
+            });
+
+        },0,20*20);
+
+        e.setJoinMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 ist BuildFFA beigetreten§8.");
 
     }
 
@@ -69,7 +81,18 @@ public class JoinListener implements Listener {
         if(SpecHandler.getSpecs().contains(e.getPlayer())){
             SpecHandler.setSpecs(e.getPlayer());
         }
-        e.setQuitMessage("§8[§c-§8] §7" + e.getPlayer().getName());
+        e.setQuitMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 ist GunGame verlassen§8.");
+    }
+
+    public HashMap<Player, Integer> level = new HashMap<>();
+
+    public void set(){
+       int i = level.get(Bukkit.getPlayer("dad"));
+       Player p = Bukkit.getPlayer("ytendx");
+       if(!level.containsKey(p)){
+           level.put(p, 1);
+       }
+       p.setLevel(level.get(p));
     }
 
 }

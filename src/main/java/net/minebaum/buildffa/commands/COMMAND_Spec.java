@@ -12,7 +12,7 @@ public class COMMAND_Spec implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if(!(commandSender instanceof Player)){return true;}
-        Player p = (((Player) commandSender).getPlayer());
+        final Player p = (((Player) commandSender).getPlayer());
         if(args.length > 1){p.sendMessage(Data.PREFIX + "§cNutze: /spec oder /spec <Name>"); return true;}
         if(!p.hasPermission("system.spec")){p.sendMessage(Data.NOPERMS); return true;}
         if(args.length == 0){

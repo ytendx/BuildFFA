@@ -63,12 +63,17 @@ public class Stats {
                     break;
             }
         }
-        mySQL.update("CREATE TABLE IF NOT EXISTS stats" + game.getName().toLowerCase() + " (UUID VARCHAR(50)" + updateTypeSet + ")");
+        mySQL.update("CREATE TABLE IF NOT EXISTS stats (UUID VARCHAR(50)" + updateTypeSet + ")");
+        game.sCMSG("Stats Types: " + updateTypeSet);
         game.sCMSG("Setuped Stats Database!");
     }
 
     public void set(StatsType type, Player player, int value){
         
+    }
+
+    public int get(StatsType type, Player player){
+        return 0;
     }
 
     public void createAccount(Player player) {

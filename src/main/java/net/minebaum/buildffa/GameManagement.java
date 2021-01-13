@@ -24,6 +24,7 @@ public class GameManagement {
     private static MySQLConnector connector;
     private static Coins buildFFACoins;
     private static KitManager kitManager;
+    public static boolean teaming = false;
 
     public static KitManager getKitManager() {
         return kitManager;
@@ -68,6 +69,7 @@ public class GameManagement {
         statsTypes[1] = StatsType.KILLS;
         statsTypes[2] = StatsType.DEATHS;
         statsTypes[3] = StatsType.KD;
+        mainSaver = new HashMap<Player, KitInventoryMerger>();
         g = new Game(BuildFFA.getPlugin(),
                 "BuildFFA",
                 "§e§lBuildFFA",
@@ -77,18 +79,14 @@ public class GameManagement {
                 0,
                 50,
                 teams);
-        gameStateIDs = new int[1];
-        gameStates = new GameState[gameStateIDs.length];
         g.setup(gameStateIDs, gameStates);
-        buildFFACoins = new Coins(BaumAPI.getPlugin());
-        buildFFACoins.setupMySQL("mok1382", "Ce6xNmK1O1theJAk", "web7447.cweb03.gamingweb.de", 3306, "buildffastats");
-        buildFFACoins.setup(0);
         kitManager = new KitManager();
         g.setCurrentGameState(gameStates[StatesManager.INGAME_STATE]);
     }
 
     public static void setInvItems(Player player){
         player.getInventory().setItem(8, new ItemBuilder(Material.ENDER_CHEST, 1, (short) 0).setDisplayname("§eKits und Gadgets").build());
+        player.getInventory().setItem(7, new ItemBuilder(Material.REDSTONE_TORCH_ON, 1, (short) 0).setDisplayname("§cInventarsortierung").build());
     }
 
     public static void endServer(){

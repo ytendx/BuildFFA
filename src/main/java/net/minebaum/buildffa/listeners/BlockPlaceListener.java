@@ -18,8 +18,8 @@ public class BlockPlaceListener implements Listener {
     public static ArrayList<Location> userblocks = new ArrayList<>();
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent e){
-        Player p = e.getPlayer();
+    public void onBlockPlace(final BlockPlaceEvent e){
+        final Player p = e.getPlayer();
         if(p.getLocation().getY() >= 195){
             e.setBuild(false);
         }else{

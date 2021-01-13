@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
@@ -12,7 +14,7 @@ public class GagetsManager {
 
     public enum Gadget{
 
-        ANGEL, ENDERPERLE, SNOWBALL;
+        ANGEL, ENDERPERLE, SNOWBALL, SPEED;
 
     }
 
@@ -26,11 +28,13 @@ public class GagetsManager {
                 p.getInventory().setItem(8, new ItemBuilder(Material.FISHING_ROD, 1, (short) 0).setUnbreakable()
                         .addEnchantment(Enchantment.KNOCKBACK, 1).addItemFlag(ItemFlag.HIDE_ATTRIBUTES).setDisplayname("§eAngel").build());
             }else
-                if(gadget.get(p).equals(Gadget.SNOWBALL)){
+                if(gadget.get(p).equals(Gadget.SNOWBALL)) {
                     p.getInventory().setItem(8, new ItemBuilder(Material.SNOW_BALL, 16, (short) 0).setDisplayname("§fSchnebälle")
                             .addEnchantment(Enchantment.ARROW_KNOCKBACK, 1).addItemFlag(ItemFlag.HIDE_ATTRIBUTES).build());
-                }
-
+                }else
+                    if(gadget.get(p).equals(Gadget.SPEED)){
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true));
+                    }
             else
                 {
                     p.getInventory().setItem(8, null);
