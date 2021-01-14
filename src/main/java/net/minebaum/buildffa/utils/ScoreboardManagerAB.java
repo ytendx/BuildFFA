@@ -45,7 +45,7 @@ public class ScoreboardManagerAB {
         Integer hours = Math.toIntExact(TimeUnit.MILLISECONDS.toHours(millis));
         obj = sb.registerNewObjective("aaa","dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        obj.setDisplayName("§c§lMineBaum §8| §7Lobby");
+        obj.setDisplayName("§c§lMineBaum §8| §7GunGame");
         Team coins = sb.registerNewTeam("coins");
         Team onlinetime = sb.registerNewTeam("onlinetime");
         obj.getScore("").setScore(10);
@@ -55,18 +55,18 @@ public class ScoreboardManagerAB {
         obj.getScore("§8 | §aBäume").setScore(6);
         obj.getScore("§5").setScore(5);
         obj.getScore("   ").setScore(4);
-        obj.getScore("§8 | §cKit").setScore(3);
+        obj.getScore("§8 | §cDeine Level").setScore(3);
         obj.getScore("§7").setScore(2);
         obj.getScore("    ").setScore(1);
         obj.getScore("§7§m-------------------").setScore(0);
         coins.addEntry("§5");
-        coins.setPrefix("§8× §7" + BaumAPI.getCoinsAPI().getCoins(p));
+        coins.setPrefix("§8× §7");
         onlinetime.addEntry("§7");
-        onlinetime.setPrefix("§8× §7" + GameManagement.getMainSaver().get(p).getKit().getName());
+        onlinetime.setPrefix("§8× §7" + hours + " §eSt");
         p.setScoreboard(sb);
         Bukkit.getScheduler().runTaskTimerAsynchronously(BuildFFA.getPlugin(), () -> {
-            coins.setPrefix("§8× §7" + BaumAPI.getCoinsAPI().getCoins(p));
-            onlinetime.setPrefix("§8× §7" + hours + " St");
+            coins.setPrefix("§8× §7"+ BaumAPI.getCoinsAPI().getCoins(p));
+            onlinetime.setPrefix("§8× §7" + ""+ " Level");
         },0,20);
         Team Leitung = sb.registerNewTeam("000Leitung");
         Team Administrator = sb.registerNewTeam("001Administrator");
@@ -161,6 +161,7 @@ public class ScoreboardManagerAB {
                 Spieler.addEntry(all.getName());
             }
         });
+
     }
     public static void updateTab(Player p) {
         Scoreboard sb = p.getScoreboard();

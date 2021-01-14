@@ -61,15 +61,10 @@ public class JoinListener implements Listener {
 
         SpecHandler.update();
 
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            ScoreboardManagerAB.setScoreboard(p);
+        ScoreboardManagerAB.setScoreboard(p);
+        Bukkit.getOnlinePlayers().forEach(all -> {
+            ScoreboardManagerAB.updateTab(all);
         });
-        Bukkit.getScheduler().runTaskTimerAsynchronously(BuildFFA.getPlugin(), () -> {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                ScoreboardManagerAB.updateTab(player);
-            });
-
-        },0,20*20);
 
         e.setJoinMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 ist BuildFFA beigetreten§8.");
 
