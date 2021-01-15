@@ -15,7 +15,7 @@ public class TankKit extends Kit {
 
     @Override
     public String getName() {
-        return "TankKit";
+        return "Tank";
     }
 
     @Override

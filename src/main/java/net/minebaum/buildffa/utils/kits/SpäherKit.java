@@ -15,7 +15,7 @@ public class SpäherKit extends Kit {
 
     @Override
     public String getName() {
-        return "SpäherKit";
+        return "Späher";
     }
 
     @Override

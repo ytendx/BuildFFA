@@ -17,7 +17,7 @@ public class PyroKit extends Kit {
 
     @Override
     public String getName() {
-        return "PyroKit";
+        return "Pyro";
     }
 
     @Override

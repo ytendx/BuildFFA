@@ -39,9 +39,9 @@ public class ScoreboardManagerAB {
         obj.getScore("    ").setScore(1);
         obj.getScore("§7§m-------------------").setScore(0);
         coins.addEntry("§5");
-        coins.setPrefix("§8× §7");
+        coins.setPrefix("§8× §7" + BaumAPI.getCoinsAPI().getCoins(p));
         onlinetime.addEntry("§7");
-        onlinetime.setPrefix("§8× §7StandartKit");
+        onlinetime.setPrefix("§8× §7" + GameManagement.getMainSaver().get(p).getKit().getName());
         p.setScoreboard(sb);
         Bukkit.getScheduler().runTaskTimerAsynchronously(BuildFFA.getPlugin(), () -> {
             coins.setPrefix("§8× §7"+ BaumAPI.getCoinsAPI().getCoins(p));

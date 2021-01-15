@@ -18,7 +18,7 @@ public class StandartKit extends Kit {
 
     @Override
     public String getName() {
-        return "StandartKit";
+        return "Standart";
     }
 
     @Override

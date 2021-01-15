@@ -16,7 +16,7 @@ public class AngreiferKit extends Kit {
 
     @Override
     public String getName() {
-        return "AngreiferKit";
+        return "Angreifer";
     }
 
     @Override
