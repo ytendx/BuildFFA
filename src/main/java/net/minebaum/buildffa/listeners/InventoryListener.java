@@ -5,11 +5,8 @@ import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.GagetsManager;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.KitInventoryMerger;
-import net.minebaum.buildffa.utils.ScoreboardManagerAB;
-import net.minebaum.buildffa.utils.kits.AngreiferKit;
-import net.minebaum.buildffa.utils.kits.SpäherKit;
-import net.minebaum.buildffa.utils.kits.StandartKit;
-import net.minebaum.buildffa.utils.kits.TankKit;
+import net.minebaum.buildffa.utils.kits.*;
+import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -28,6 +25,25 @@ public class InventoryListener implements Listener {
             if(target != null){
                 p.teleport(target);
                 p.closeInventory();
+            }
+        }
+        if(e.getInventory().getTitle().equalsIgnoreCase("§cEinstellungen")){
+            if(e.getCurrentItem().getItemMeta().getDisplayName().contains("An")){
+                SpecHandler.getChecks().remove(p);
+                p.closeInventory();
+            }else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Aus")){
+                if(p.hasPermission("system.spec.check")){
+                    if(SpecHandler.getChecks().contains(p)){
+                        p.closeInventory();
+                        return;
+                    }else{
+                        p.closeInventory();
+                        SpecHandler.getChecks().add(p);
+                    }
+                }else{
+                    p.sendTitle("§cFehler", "§cKeine Rechte!");
+                    p.closeInventory();
+                }
             }
         }
         if(p.getLocation().getY() >= 195){
@@ -60,7 +76,14 @@ public class InventoryListener implements Listener {
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                ScoreboardManagerAB.sendScoreboard(p);
+            }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cPyroKit")){
+                if(GameManagement.getMainSaver().containsKey(p)){
+                    GameManagement.getMainSaver().get(p).setKit(new PyroKit().setup());
+                }else{
+                    GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new PyroKit().setup()));
+                }
+                p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
+                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§3SpäherKit")){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new SpäherKit().setup());
@@ -69,7 +92,6 @@ public class InventoryListener implements Listener {
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                ScoreboardManagerAB.sendScoreboard(p);
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("§fSchne")){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.SNOWBALL);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget Schneebälle ausgewählt.");
@@ -82,7 +104,6 @@ public class InventoryListener implements Listener {
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                ScoreboardManagerAB.sendScoreboard(p);
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§bTankKit")){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new TankKit().setup());
@@ -91,7 +112,6 @@ public class InventoryListener implements Listener {
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                ScoreboardManagerAB.sendScoreboard(p);
             }
             if(e.getInventory().getTitle().equalsIgnoreCase("§eKits und Gadgets")){
                 e.setCancelled(true);

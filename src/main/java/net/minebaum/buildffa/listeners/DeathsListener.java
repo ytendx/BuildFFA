@@ -36,6 +36,7 @@ public class DeathsListener implements Listener {
         p.setMaxHealth(6);
         p.setHealth(6);
         p.setFoodLevel(20);
+        p.setFireTicks(0);
         if(MoveListener.getted.contains(p)){
             MoveListener.getted.remove(p);
         }

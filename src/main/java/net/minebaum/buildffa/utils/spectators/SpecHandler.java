@@ -19,6 +19,8 @@ public class SpecHandler {
 
     private static ArrayList<Player> specs = new ArrayList<Player>();
     private static ItemStack nav = new ItemBuilder(Material.COMPASS, 1, (short) 0).setDisplayname("§cNavigator").setUnbreakable().build();
+    private static ItemStack config = new ItemBuilder(Material.REDSTONE_COMPARATOR, 1, (short) 0).setDisplayname("§cEinstellungen").setUnbreakable().build();
+    private static ItemStack back = Skull.getPlayerSkull("MHF_ArrowRight");
 
     public static ItemStack getNav() {
         return nav;
@@ -41,6 +43,11 @@ public class SpecHandler {
             player.setFlying(true);
             player.getInventory().clear();
             player.getInventory().setItem(0, nav);
+            player.getInventory().setItem(4, config);
+            ItemMeta meta = back.getItemMeta();
+            meta.setDisplayName("§cSpectatormodus Verlassen");
+            back.setItemMeta(meta);
+            player.getInventory().setItem(8, back);
 
         }else{
             for(Player all : Bukkit.getOnlinePlayers()){
@@ -79,6 +86,21 @@ public class SpecHandler {
             }
         }
 
+        return inv;
+    }
+
+    private static ArrayList<Player> checks = new ArrayList<Player>();
+
+    public static ArrayList<Player> getChecks() {
+        return checks;
+    }
+
+    public static Inventory confInv(Player player){
+        Inventory inv = new GuiAPI().fillerGUI(9, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setDisplayname(" ").build(), "§cEinstellungen");
+        if(checks.contains(player)){
+            inv.setItem(4, new ItemBuilder(Material.REDSTONE, 1, (short) 0).setDisplayname("§cCheckMode §8× §aAn").build());
+        }else
+        inv.setItem(4, new ItemBuilder(Material.REDSTONE, 1, (short) 0).setDisplayname("§cCheckMode §8× §cAus").build());
         return inv;
     }
 

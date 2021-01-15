@@ -70,10 +70,13 @@ public class KitManager {
         lore3.add("§7Du erhältst ein extra starkes Schwert.");
         ArrayList<String> lore4 = new ArrayList<String>();
         lore4.add("§7Du erhälst einen Bogen.");
+        ArrayList<String> lore5 = new ArrayList<String>();
+        lore5.add("§7Du erhälst ein Feuerzeug und Fire Resistance.");
         inv.setItem(10, new ItemBuilder(Material.WOOD_PICKAXE, 1, (short) 0).setDisplayname("§eStandartkit").setLore(lore1).build());
         inv.setItem(11, new ItemBuilder(Material.DIAMOND_CHESTPLATE, 1, (short) 0).setDisplayname("§bTankKit").setLore(lore2).build());
         inv.setItem(12, new ItemBuilder(Material.DIAMOND_SWORD, 1, (short) 0).setDisplayname("§fAngreiferKit").setLore(lore3).build());
         inv.setItem(13, new ItemBuilder(Material.BOW, 1, (short) 0).setDisplayname("§3SpäherKit").setLore(lore4).build());
+        inv.setItem(14, new ItemBuilder(Material.FLINT_AND_STEEL, 1, (short) 0).setDisplayname("§cPyroKit").setLore(lore5).build());
         player.openInventory(inv);
     }
 

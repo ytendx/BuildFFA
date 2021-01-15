@@ -15,27 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ScoreboardManagerAB {
 
-    public static void sendScoreboard(Player p) {
-        ScoreboardManager sm = BuildFFA.getPlugin().getServer().getScoreboardManager();
-        Scoreboard board = sm.getNewScoreboard();
-        Objective obj = board.registerNewObjective("abc", "dummy");
-
-        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        obj.setDisplayName("§c§lMineBaum §8| §7BuildFFA");
-        obj.getScore("  ").setScore(10);
-        obj.getScore("§8 | §cProfil").setScore(9);
-        obj.getScore("§8× §7" + p.getName()).setScore(8);
-        obj.getScore(" ").setScore(7);
-        obj.getScore("§8 | §aBäume").setScore(6);
-        obj.getScore("§8× §7" + BaumAPI.getCoinsAPI().getCoins(p)).setScore(5);
-        obj.getScore("§d ").setScore(4);
-        obj.getScore("§8 | §7Kit").setScore(3);
-        obj.getScore("§8× §7" + GameManagement.getMainSaver().get(p).getKit().getName()).setScore(2);
-        obj.getScore("§5 ").setScore(1);
-
-        p.setScoreboard(board);
-    }
-
     public static void setScoreboard(Player p) {
         Scoreboard sb;
         Objective obj;
@@ -55,18 +34,18 @@ public class ScoreboardManagerAB {
         obj.getScore("§8 | §aBäume").setScore(6);
         obj.getScore("§5").setScore(5);
         obj.getScore("   ").setScore(4);
-        obj.getScore("§8 | §cDeine Level").setScore(3);
+        obj.getScore("§8 | §cKit").setScore(3);
         obj.getScore("§7").setScore(2);
         obj.getScore("    ").setScore(1);
         obj.getScore("§7§m-------------------").setScore(0);
         coins.addEntry("§5");
         coins.setPrefix("§8× §7");
         onlinetime.addEntry("§7");
-        onlinetime.setPrefix("§8× §7" + hours + " §eSt");
+        onlinetime.setPrefix("§8× §7" + GameManagement.getMainSaver().get(p).getKit().getName());
         p.setScoreboard(sb);
         Bukkit.getScheduler().runTaskTimerAsynchronously(BuildFFA.getPlugin(), () -> {
             coins.setPrefix("§8× §7"+ BaumAPI.getCoinsAPI().getCoins(p));
-            onlinetime.setPrefix("§8× §7" + ""+ " Level");
+            onlinetime.setPrefix("§8× §7" + GameManagement.getMainSaver().get(p).getKit().getName());
         },0,20);
         Team Leitung = sb.registerNewTeam("000Leitung");
         Team Administrator = sb.registerNewTeam("001Administrator");
@@ -108,7 +87,7 @@ public class ScoreboardManagerAB {
         Freund.setPrefix("§2F §8◆ §7");
         Creator.setPrefix("§5C §8◆ §7");
         Partner.setPrefix("§3P §8◆ §7");
-        Baum.setPrefix("§2B §8◆ §7");
+        Baum.setPrefix("§2BAUM §8◆ §7");
         Prime.setPrefix("§dP §8◆ §7");
         Premium.setPrefix("§6P §8◆ §7");
         Spieler.setPrefix("§7");

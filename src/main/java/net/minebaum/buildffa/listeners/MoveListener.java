@@ -30,6 +30,15 @@ public class MoveListener implements Listener {
     @EventHandler
     public void onMove(final PlayerMoveEvent e){
         final Player p = e.getPlayer();
+        if(e.getTo().getY() >= 195 && e.getFrom().getY() <= 195 && !SpecHandler.getSpecs().contains(p)){
+            p.teleport(e.getFrom());
+            new ActionbarAPI("§cDas darfst du nicht!", p).send();
+            for(Player all : Bukkit.getOnlinePlayers()){
+                if(all.hasPermission("system.spec")){
+                    all.sendMessage(Data.PREFIX + "§cDer Spieler " + p.getName() + " versucht sich auf die Spawninsel zu buggen.");
+                }
+            }
+        }
         if(p.getLocation().getY() <= 1){
             if(SpecHandler.getSpecs().contains(p)){
                 p.teleport(LocationManager.getLocation("spawn"));
@@ -50,6 +59,7 @@ public class MoveListener implements Listener {
             p.setMaxHealth(6);
             p.setHealth(6);
             p.setFoodLevel(20);
+            p.setFireTicks(0);
             p.teleport(LocationManager.getLocation("spawn"));
             p.getInventory().clear();
             GameManagement.setInvItems(p);

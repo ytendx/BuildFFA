@@ -4,6 +4,8 @@ import net.minebaum.baumapi.utils.Data;
 import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +27,13 @@ public class InteractListener implements Listener {
             if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cInventarsortierung")){
                 new InventorySortManager(GameManagement.getConnector()).openSetInventory(p);
                 p.sendMessage(Data.PREFIX + "§cSortiere dein Inventar!");
+            }
+            if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cEinstellungen")){
+                p.openInventory(SpecHandler.confInv(p));
+                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+            }
+            if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cSpectatormodus Verlassen")){
+                Bukkit.dispatchCommand(p, "spec");
             }
         }
     }

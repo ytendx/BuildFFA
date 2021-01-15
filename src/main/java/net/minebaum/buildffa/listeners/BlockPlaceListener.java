@@ -1,6 +1,7 @@
 package net.minebaum.buildffa.listeners;
 
 import net.minebaum.buildffa.BuildFFA;
+import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,6 +21,10 @@ public class BlockPlaceListener implements Listener {
     @EventHandler
     public void onBlockPlace(final BlockPlaceEvent e){
         final Player p = e.getPlayer();
+        if(SpecHandler.getSpecs().contains(p)){
+            e.setBuild(false);
+            e.setCancelled(true);
+        }
         if(p.getLocation().getY() >= 195){
             e.setBuild(false);
         }else{

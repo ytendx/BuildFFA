@@ -19,9 +19,10 @@ public class EntityDamageListener implements Listener {
     public void onHit(final EntityDamageByEntityEvent e){
         if(e.getEntity().getType() == EntityType.PLAYER){
             if(SpecHandler.getSpecs().contains((Player) e.getDamager())){
-                if(e.getDamager().hasPermission("system.spec.check")){
+                if(SpecHandler.getChecks().contains(((Player) e.getDamager()).getPlayer())){
                     e.setCancelled(false);
                 }else{
+                    new ActionbarAPI("§cAktiviere den ChekcMode!", ((Player) e.getDamager()).getPlayer()).send();
                     e.setCancelled(true);
                 }
             }
