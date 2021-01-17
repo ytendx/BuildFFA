@@ -7,6 +7,7 @@ import net.minebaum.buildffa.BuildFFA;
 import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.*;
 import net.minebaum.buildffa.utils.kits.StandartKit;
+import net.minebaum.buildffa.utils.mysql.SQLStats;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,14 +23,23 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent e){
-
+        final Player p = e.getPlayer();
+        SQLStats.createPlayer(p.getUniqueId().toString());
+        ScoreboardManagerAB.setScoreboard(p);
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            ScoreboardManagerAB.updateTab(player);
+        });
+        Bukkit.getScheduler().runTaskLater(BuildFFA.getPlugin(),() -> {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                ScoreboardManagerAB.updateTab(p);
+            });
+        },20);
         try {
             GameManagement.getGame().getStats().createAccount(e.getPlayer());
         }catch (Exception e1){
             GameManagement.getGame().sCMSG("[BuildFFA] Create Stats Account failed!");
         }
 
-        final Player p = e.getPlayer();
         p.getInventory().clear();
 
         if(!GagetsManager.gadget.containsKey(p)){

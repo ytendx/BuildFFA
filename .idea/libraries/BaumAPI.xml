@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BaumAPI">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../BaumAPI" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../BaumAPI/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

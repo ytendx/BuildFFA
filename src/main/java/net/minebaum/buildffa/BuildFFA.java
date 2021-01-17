@@ -7,7 +7,6 @@ import net.minebaum.buildffa.commands.COMMAND_Setup;
 import net.minebaum.buildffa.commands.COMMAND_Spec;
 import net.minebaum.buildffa.commands.COMMAND_Teaming;
 import net.minebaum.buildffa.listeners.*;
-import net.minebaum.buildffa.utils.ScoreboardManagerAB;
 import net.minebaum.buildffa.utils.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -60,6 +59,7 @@ public class BuildFFA extends JavaPlugin {
                 }
             }
         }, 0, 40);
+        GameManagement.getConnector().update("CREATE TABLE IF NOT EXISTS Stats(UUID varchar(65), KILLS int,DEATHS int,POINTS int);");
     }
 
     private void register() {
