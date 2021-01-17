@@ -62,9 +62,6 @@ public class JoinListener implements Listener {
         SpecHandler.update();
 
         ScoreboardManagerAB.setScoreboard(p);
-        Bukkit.getOnlinePlayers().forEach(all -> {
-            ScoreboardManagerAB.updateTab(all);
-        });
 
         e.setJoinMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 ist BuildFFA beigetreten§8.");
 

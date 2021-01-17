@@ -1,6 +1,8 @@
 package net.minebaum.buildffa.utils.kits;
 
 import net.minebaum.baumapi.utils.ItemBuilder;
+import net.minebaum.buildffa.GameManagement;
+import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Material;
@@ -38,8 +40,7 @@ public class TankKit extends Kit {
         if(SpecHandler.getSpecs().contains(player)){
             return;
         }
-        for(int i = 1; i <= 3; i++)
-            player.getInventory().setItem(i-1, itemStackList[i-1]);
+        new InventorySortManager(GameManagement.getConnector()).sendItems(player, this, itemStackList[0], itemStackList[1], null, itemStackList[2]);
         player.getInventory().setHelmet(new ItemBuilder(Material.CHAINMAIL_HELMET, 1, (short) 0).setDisplayname("Helm").build());
         player.getInventory().setChestplate(new ItemBuilder(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0).setDisplayname("Chestplate").build());
         player.getInventory().setLeggings(new ItemBuilder(Material.CHAINMAIL_LEGGINGS, 1, (short) 0).setDisplayname("Hose").build());

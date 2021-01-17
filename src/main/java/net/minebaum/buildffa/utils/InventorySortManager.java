@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,12 +26,61 @@ public class InventorySortManager {
         connector.update("CREATE TABLE IF NOT EXISTS inventorysort (UUID VARCHAR(50), Inventory TEXT)");
     }
 
+    public InventorySortManager(){ }
+
+    public void sendItems(Player player, Kit kit, ItemStack mainitem, ItemStack seconditem, ItemStack gadgets, ItemStack blöcke){
+        Inventory inv = null;
+        player.sendMessage("test1");
+        if(getInv(player) != null){
+            inv = getInv(player);
+        }
+        player.sendMessage("test2");
+        int[] items = new int[4];
+        assert inv != null;
+        for(ItemStack is : inv.getContents()){
+            player.getInventory().addItem(is);
+            if(is.getType().equals(Material.WOOD_SWORD)){
+                if(inv.getItem(0) == is){ items[0] = 0; }else if(inv.getItem(1) == is){ items[0] = 1; }else if(inv.getItem(2) == is)
+                { items[0] = 2; }else if(inv.getItem(3) == is){ items[0] = 3; }else if(inv.getItem(4) == is){ items[0] = 4; }else if
+                (inv.getItem(5) == is){ items[0] = 5; }else if(inv.getItem(6) == is){ items[0] = 6; }else if(inv.getItem(7) == is)
+                { items[0] = 7; }else if(inv.getItem(8) == is){ items[0] = 8; }
+            }else
+            if(is.getType().equals(Material.WOOD_PICKAXE)){
+                if(inv.getItem(0) == is){ items[1] = 0; }else if(inv.getItem(1) == is){ items[1] = 1; }else if(inv.getItem(2) == is)
+                { items[1] = 2; }else if(inv.getItem(3) == is){ items[1] = 3; }else if(inv.getItem(4) == is){ items[1] = 4; }else if
+                (inv.getItem(5) == is){ items[1] = 5; }else if(inv.getItem(6) == is){ items[1] = 6; }else if(inv.getItem(7) == is)
+                { items[1] = 7; }else if(inv.getItem(8) == is){ items[1] = 8; }
+            }else
+            if(is.getType().equals(Material.SANDSTONE)){
+                if(inv.getItem(0) == is){ items[2] = 0; }else if(inv.getItem(1) == is){ items[2] = 1; }else if(inv.getItem(2) == is)
+                { items[2] = 2; }else if(inv.getItem(3) == is){ items[2] = 3; }else if(inv.getItem(4) == is){ items[2] = 4; }else if
+                (inv.getItem(5) == is){ items[2] = 5; }else if(inv.getItem(6) == is){ items[2] = 6; }else if(inv.getItem(7) == is)
+                { items[2] = 7; }else if(inv.getItem(8) == is){ items[2] = 8; }
+            }else
+            if(is.getType().equals(Material.BARRIER)){
+                if(inv.getItem(0) == is){ items[3] = 0; }else if(inv.getItem(1) == is){ items[3] = 1; }else if(inv.getItem(2) == is)
+                { items[3] = 2; }else if(inv.getItem(3) == is){ items[3] = 3; }else if(inv.getItem(4) == is){ items[3] = 4; }else if
+                (inv.getItem(5) == is){ items[3] = 5; }else if(inv.getItem(6) == is){ items[3] = 6; }else if(inv.getItem(7) == is)
+                { items[3] = 7; }else if(inv.getItem(8) == is){ items[3] = 8; }
+            }
+        }
+        player.openInventory(inv);
+        player.sendMessage("" + items[0]);
+        player.sendMessage("" + items[1]);
+        player.sendMessage("" + items[2]);
+        player.sendMessage("" + items[3]);
+        player.getInventory().setItem(items[0], mainitem);
+        player.getInventory().setItem(items[1], seconditem);
+        player.getInventory().setItem(items[2], gadgets);
+        player.getInventory().setItem(items[3], blöcke);
+    }
+
     public void set(Inventory inv, Player player){
         if(connector != null){
             boolean exist = false;
             try {
                 ResultSet rs =
-                        connector.query("SELECT Coins FROM inventorysort WHERE UUID='" +
+                        connector.query("SELECT Inventory FROM inventorysort WHERE UUID='" +
                                 player.getUniqueId().toString() + "';");
                 while (rs.next())
                     exist = Boolean.valueOf(true).booleanValue();
@@ -43,7 +91,7 @@ public class InventorySortManager {
                 connector.update("INSERT INTO inventorysort (UUID,Inventory) values ('" +
                         player.getUniqueId().toString() + "', '"
                         + toBase64(Bukkit.createInventory(null, 36)) +
-                        "');");}
+                        "');");}else
 
             connector.update("UPDATE inventorysort SET Inventory = '" +
                     toBase64(inv)
@@ -59,7 +107,7 @@ public class InventorySortManager {
             boolean exist = false;
             try {
                 ResultSet rs =
-                        connector.query("SELECT Coins FROM inventorysort WHERE UUID='" +
+                        connector.query("SELECT Inventory FROM inventorysort WHERE UUID='" +
                                 player.getUniqueId().toString() + "';");
                 while (rs.next())
                     exist = Boolean.valueOf(true).booleanValue();

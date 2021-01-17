@@ -21,11 +21,15 @@ public class InventoryListener implements Listener {
         final Player p = (Player)e.getWhoClicked();
         if(e.getInventory().getTitle().equals("§cOnlinespieler")){
             e.setCancelled(true);
-            Player target = Bukkit.getPlayer(e.getCurrentItem().getItemMeta().getDisplayName());
+            final Player target = Bukkit.getPlayer(e.getCurrentItem().getItemMeta().getDisplayName());
             if(target != null){
                 p.teleport(target);
                 p.closeInventory();
             }
+        }
+        if(e.getInventory().getTitle().equalsIgnoreCase("§eSortiere dein Inventar §8>>")){
+            e.setCancelled(false);
+            return;
         }
         if(e.getInventory().getTitle().equalsIgnoreCase("§cEinstellungen")){
             if(e.getCurrentItem().getItemMeta().getDisplayName().contains("An")){

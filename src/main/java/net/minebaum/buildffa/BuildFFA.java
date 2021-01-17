@@ -81,6 +81,7 @@ public class BuildFFA extends JavaPlugin {
         pm.registerEvents(new CloseInventory(), this);
         pm.registerEvents(new TeleportListener(), this);
         pm.registerEvents(new SneakListener(), this);
+        pm.registerEvents(new ChatListener(), this);
         //COMMANDS
         getCommand("setup").setExecutor(new COMMAND_Setup());
         getCommand("spec").setExecutor(new COMMAND_Spec());

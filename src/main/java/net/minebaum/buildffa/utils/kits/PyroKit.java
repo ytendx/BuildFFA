@@ -1,6 +1,8 @@
 package net.minebaum.buildffa.utils.kits;
 
 import net.minebaum.baumapi.utils.ItemBuilder;
+import net.minebaum.buildffa.GameManagement;
+import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Material;
@@ -41,8 +43,7 @@ public class PyroKit extends Kit {
         if(SpecHandler.getSpecs().contains(player)){
             return;
         }
-        for(int i = 1; i <= 3; i++)
-            player.getInventory().setItem(i-1, itemStackList[i-1]);
+        new InventorySortManager(GameManagement.getConnector()).sendItems(player, this, itemStackList[0], null, itemStackList[1], itemStackList[2]);
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1));
         player.getInventory().setBoots(new ItemBuilder(Material.LEATHER_BOOTS, 1, (short) 0).setUnbreakable().build());
         player.getInventory().setLeggings(new ItemBuilder(Material.LEATHER_LEGGINGS, 1, (short) 0).setUnbreakable().build());
