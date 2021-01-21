@@ -4,10 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockBreakListener implements Listener {
 
@@ -35,7 +33,7 @@ public class BlockBreakListener implements Listener {
                 return;
             }else{
                 e.setCancelled(true);
-                p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_DESTROY, 1, 1);
+                p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 1, 1);
             }
         }
     }

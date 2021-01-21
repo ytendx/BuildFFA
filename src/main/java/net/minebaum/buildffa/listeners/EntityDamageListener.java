@@ -46,7 +46,7 @@ public class EntityDamageListener implements Listener {
             }
             Player p = (Player) e.getDamager();
             Player p2 = (Player) e.getEntity();
-            p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1F, 1F);
+            p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 1F, 1F);
         }else if(e.getDamager().getType() == EntityType.SNOWBALL){
             e.setDamage(1);
             e.setCancelled(false);

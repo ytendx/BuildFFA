@@ -35,7 +35,7 @@ public class SpecHandler {
             specs.add(player);
             for(Player all : Bukkit.getOnlinePlayers()){
                 for(Player specs : specs){
-                    all.hidePlayer(BuildFFA.getPlugin(), specs);
+                    all.hidePlayer(specs);
                 }
             }
             Bukkit.broadcastMessage("§8[§c-§8] §7" + player.getName());
@@ -51,7 +51,7 @@ public class SpecHandler {
 
         }else{
             for(Player all : Bukkit.getOnlinePlayers()){
-                all.showPlayer(BuildFFA.getPlugin(), player);
+                all.showPlayer(player);
             }
             Bukkit.broadcastMessage("§8[§a+§8] §7" + player.getName());
             player.teleport(LocationManager.getLocation("spawn"));
@@ -66,7 +66,7 @@ public class SpecHandler {
     public static void update(){
         for(Player all : Bukkit.getOnlinePlayers()){
             for(Player specs : specs){
-                all.hidePlayer(BuildFFA.getPlugin(), specs);
+                all.hidePlayer(specs);
             }
         }
     }

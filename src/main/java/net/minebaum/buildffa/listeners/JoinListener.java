@@ -72,7 +72,7 @@ public class JoinListener implements Listener {
         if(SpecHandler.getSpecs().contains(e.getPlayer())){
             SpecHandler.setSpecs(e.getPlayer());
         }
-        e.setQuitMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 hat BuildFFA verlassen§8.");
+        e.setQuitMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getName() + "§7 hat BuildFFA verlassen§8.");
     }
 
     public HashMap<Player, Integer> level = new HashMap<>();

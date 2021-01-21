@@ -30,7 +30,7 @@ public class InventoryListener implements Listener {
         if(e.getInventory().getTitle().equalsIgnoreCase("§eSortiere dein Inventar §8>>")){
             e.setCancelled(false);
             return;
-        }
+        }else e.setCancelled(true);
         if(e.getInventory().getTitle().equalsIgnoreCase("§cEinstellungen")){
             if(e.getCurrentItem().getItemMeta().getDisplayName().contains("An")){
                 SpecHandler.getChecks().remove(p);
@@ -57,7 +57,7 @@ public class InventoryListener implements Listener {
                 p.sendMessage(Data.PREFIX + "§cWähle ein Kit!");
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cZurück")){
                 GameManagement.getKitManager().openMenuInv(p);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_SNARE, 1, 1);
+                p.playSound(p.getLocation(), Sound.NOTE_SNARE_DRUM, 1, 1);
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§eGadgets")){
                 GameManagement.getKitManager().openGadgetMenu(p);
                 p.sendMessage(Data.PREFIX + "§cWähle ein Gadget!");
@@ -67,7 +67,7 @@ public class InventoryListener implements Listener {
                 if(p.hasPermission("system.bffa.gadget.angel")){
                     GagetsManager.gadget.replace(p, GagetsManager.Gadget.ANGEL);
                     p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget die Angel ausgewählt.");
-                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                    p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -76,7 +76,7 @@ public class InventoryListener implements Listener {
                 if(p.hasPermission("system.bffa.gadget.enderpearl")){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.ENDERPERLE);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget die Enderperle ausgewählt.");
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -85,7 +85,7 @@ public class InventoryListener implements Listener {
                 if(p.hasPermission("system.bffa.gadget.speed")){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.SPEED);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget Speed ausgewählt.");
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -98,7 +98,7 @@ public class InventoryListener implements Listener {
                     GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new AngreiferKit().setup()));
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -111,7 +111,7 @@ public class InventoryListener implements Listener {
                     GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new PyroKit().setup()));
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -124,7 +124,7 @@ public class InventoryListener implements Listener {
                     GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new SpäherKit().setup()));
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -133,7 +133,7 @@ public class InventoryListener implements Listener {
                 if(p.hasPermission("system.bffa.kit.schneeball")){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.SNOWBALL);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget Schneebälle ausgewählt.");
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -146,7 +146,7 @@ public class InventoryListener implements Listener {
                     GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new StandartKit().setup()));
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
@@ -159,7 +159,7 @@ public class InventoryListener implements Listener {
                     GameManagement.getMainSaver().put(p, new KitInventoryMerger(p, new InventorySortManager(GameManagement.getConnector()), new TankKit().setup()));
                 }
                 p.sendMessage(Data.PREFIX + "§eDu hast dein Kit erfolgreich zu " + GameManagement.getMainSaver().get(p).getKit().getName());
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");

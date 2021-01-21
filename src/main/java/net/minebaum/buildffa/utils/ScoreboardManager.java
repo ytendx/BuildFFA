@@ -4,8 +4,8 @@ import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.player.ICloudPlayer;
 import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.buildffa.GameManagement;
-import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import java.util.concurrent.TimeUnit;
 
@@ -29,16 +29,16 @@ public class ScoreboardManager {
         sendPacket(p, createPacket);
         sendPacket(p, display);
         ScoreboardTeam coins =  new ScoreboardTeam(board,"coins");
-        coins.setPrefix("§8 ⩏ × " + BaumAPI.getCoinsAPI().getCoins(p));
+        coins.setPrefix("§8 | × §7" + BaumAPI.getCoinsAPI().getCoins(p));
         sendScore(p, board, objective, " ", 10);
-        sendScore(p, board, objective, "§8 ⩎ §cProfil ", 9);
-        sendScore(p, board, objective, "§8 ⩏ × §7" + p.getName(), 8);
+        sendScore(p, board, objective, "§8 | §cProfil ", 9);
+        sendScore(p, board, objective, "§8 | × §7" + p.getName(), 8);
         sendScore(p, board, objective, "  ", 7);
-        sendScore(p, board, objective, "§8 ⩎ §aBäume ", 6);
+        sendScore(p, board, objective, "§8 | §aBäume ", 6);
         sendScore(p, board, objective, coins.getPrefix(), 5);
         sendScore(p, board, objective, "   ", 4);
-        sendScore(p, board, objective, "§8 ⩎ §eKit ", 3);
-        sendScore(p, board, objective, "§8 ⩏ × §7" + GameManagement.getMainSaver().get(p).getKit().getName(), 2);
+        sendScore(p, board, objective, "§8 | §eKit ", 3);
+        sendScore(p, board, objective, "§8 | × §7" + GameManagement.getMainSaver().get(p).getKit().getName(), 2);
         sendScore(p, board, objective, "    ", 1);
     }
 

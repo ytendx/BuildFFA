@@ -28,7 +28,7 @@ public class DeathsListener implements Listener {
         killer.sendMessage(Data.PREFIX + "§e+ 10 Coins");
         new ActionbarAPI("§e+ §610 §7Coins", killer).send();
         BaumAPI.getCoinsAPI().addCoins(killer, 10);
-        killer.playSound(killer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        killer.playSound(killer.getLocation(), Sound.LEVEL_UP, 1, 1);
         killer.setHealth(6);
         killer.setFoodLevel(20);
         p.setMaxHealth(6);
@@ -44,7 +44,7 @@ public class DeathsListener implements Listener {
         GameManagement.setInvItems(p);
         p.removePotionEffect(PotionEffectType.SPEED);
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 75));
-        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
+        p.playSound(p.getLocation(), Sound.NOTE_BASS, 1, 1);
     }
 
 }

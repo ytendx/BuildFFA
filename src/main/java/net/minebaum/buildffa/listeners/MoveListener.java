@@ -45,7 +45,7 @@ public class MoveListener implements Listener {
             boolean didAlreadeShouted = false;
             if(killer != null && !SpecHandler.getSpecs().contains(killer)){
                 killer.sendMessage(Data.PREFIX + "§e+ 10 Coins");
-                killer.playSound(killer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                killer.playSound(killer.getLocation(), Sound.LEVEL_UP, 1, 1);
                 BaumAPI.getCoinsAPI().addCoins(killer, 10);
                 Bukkit.broadcastMessage(Data.PREFIX + "§e" + p.getName() + " §7wurde von §e" + killer.getName() + " §7ins leere geschubst.");
                 SQLStats.addDeaths(p.getUniqueId().toString(), 1);
@@ -67,7 +67,7 @@ public class MoveListener implements Listener {
             p.getInventory().clear();
             GameManagement.setInvItems(p);
             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 75));
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
+            p.playSound(p.getLocation(), Sound.NOTE_BASS, 1, 1);
         }else if(p.getLocation().getY() <= 195){
             if(p.getOpenInventory().getTitle().equalsIgnoreCase("§eWähle ein Gadget >>")){
                 p.closeInventory();
@@ -86,7 +86,7 @@ public class MoveListener implements Listener {
                 getted.add(p);
                 p.getInventory().clear();
                 GameManagement.getMainSaver().get(p).getKit().setItemStacksToInventory(p);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
+                p.playSound(p.getLocation(), Sound.NOTE_BASS, 1, 1);
             }
         }else if(p.getLocation().getY() >= 195){
             if(p.getActivePotionEffects() != null){

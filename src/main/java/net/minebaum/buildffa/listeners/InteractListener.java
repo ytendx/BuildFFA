@@ -31,14 +31,14 @@ public class InteractListener implements Listener {
             }
             if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cEinstellungen")){
                 p.openInventory(SpecHandler.confInv(p));
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
             }
             if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cSpectatormodus Verlassen")){
                 Bukkit.dispatchCommand(p, "spec");
             }
             if(e.getItem().getItemMeta().getDisplayName().contains("§cStats")){
                 SQLStats.openStatsHead(p);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_GUITAR, 1, 1);
+                p.playSound(p.getLocation(), Sound.NOTE_BASS_GUITAR, 1, 1);
             }
             if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cZurück zur Lobby §8■▶")){
                 p.kickPlayer(Data.PREFIX + "§eDu wurdest auf eine Lobby gesendet...");
