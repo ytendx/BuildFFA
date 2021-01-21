@@ -13,7 +13,7 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent e){
         Player p = e.getPlayer();
         if(e.getMessage().equalsIgnoreCase("#testinv")){
-            p.openInventory(new InventorySortManager(GameManagement.getConnector()).getInv(p));
+            p.sendMessage("piss dich! kek");
         }
 
     }

@@ -3,9 +3,11 @@ package net.minebaum.buildffa;
 import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ActionbarAPI;
 import net.minebaum.baumapi.coinapi.Coins;
+import net.minebaum.baumapi.utils.Data;
 import net.minebaum.buildffa.commands.COMMAND_Setup;
 import net.minebaum.buildffa.commands.COMMAND_Spec;
 import net.minebaum.buildffa.commands.COMMAND_Teaming;
+import net.minebaum.buildffa.commands.Stats;
 import net.minebaum.buildffa.listeners.*;
 import net.minebaum.buildffa.utils.game.Game;
 import org.bukkit.Bukkit;
@@ -18,6 +20,7 @@ public class BuildFFA extends JavaPlugin {
     private static BuildFFA plugin;
     private static Game g;
     private static Coins coins;
+    private int count = 0;
 
     public static Coins getCoins() {
         return coins;
@@ -52,6 +55,18 @@ public class BuildFFA extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
             @Override
             public void run() {
+                if(count == 6){
+                    count = 0;
+                }
+                for(Player all : Bukkit.getOnlinePlayers()){
+                    all.sendMessage(news(count));
+                }
+                count++;
+            }
+        }, 0, 20*60);
+        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+            @Override
+            public void run() {
                 for(Player all : Bukkit.getOnlinePlayers()){
                     if(GameManagement.teaming){
                         new ActionbarAPI("§cAchtung! §7Nur §a3er §7Teams §aerlaubt§7.", all).send();
@@ -82,10 +97,28 @@ public class BuildFFA extends JavaPlugin {
         pm.registerEvents(new TeleportListener(), this);
         pm.registerEvents(new SneakListener(), this);
         pm.registerEvents(new ChatListener(), this);
+        pm.registerEvents(new InventoryOpenListener(), this);
         //COMMANDS
         getCommand("setup").setExecutor(new COMMAND_Setup());
         getCommand("spec").setExecutor(new COMMAND_Spec());
         getCommand("teaming").setExecutor(new COMMAND_Teaming());
+        getCommand("stats").setExecutor(new Stats());
+    }
+
+    private String news(int count){
+        if(count == 0){
+            return Data.PREFIX + "§eDeine Items buggen? §a-> §e*SNEAKEN*";
+        }else if(count == 1){
+            return Data.PREFIX + "§cOb Teaming erlaubt ist, siehst du in der Actionbar!";
+        }else if(count == 2){
+            return Data.PREFIX + "§eKaufe dir Kits in der Lobby! §8-> §e/shop";
+        }else if(count == 3){
+            return Data.PREFIX + "§cAchtung Achtung! §7Gadgets sind ein einmaliges Item!";
+        }else if(count == 4){
+            return Data.PREFIX + "§cDer Versuch von Bugusing ist verboten und wird bestraft!";
+        }else{
+            return Data.PREFIX + "§eDu befindest dich auf BuildFFA von §c§lMineBaum§8.";
+        }
     }
 
     @Override

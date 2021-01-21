@@ -32,7 +32,7 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope
+            <scope>provided</scope>
         </dependency>
         <!--Spigot API and NMS-->
         <dependency>
@@ -52,6 +52,13 @@
             <artifactId>simplecloud-module-permission</artifactId>
             <version>2.0.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.minebaum</groupId>
+            <artifactId>api.plugin.APIPlugin</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:\Users\admin\Documents\BaumAPI-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

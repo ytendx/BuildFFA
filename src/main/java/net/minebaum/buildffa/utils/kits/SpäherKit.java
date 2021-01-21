@@ -2,6 +2,7 @@ package net.minebaum.buildffa.utils.kits;
 
 import net.minebaum.baumapi.utils.ItemBuilder;
 import net.minebaum.buildffa.GameManagement;
+import net.minebaum.buildffa.utils.GagetsManager;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
@@ -45,6 +46,7 @@ public class SpäherKit extends Kit {
         if(SpecHandler.getSpecs().contains(player)){
             return;
         }
-        new InventorySortManager(GameManagement.getConnector()).sendItems(player, this, itemStackList[0], itemStackList[1], itemStackList[3], itemStackList[2]);
+        new InventorySortManager(GameManagement.getConnector()).sendItems(player, itemStackList[0], itemStackList[1], GagetsManager.getInvItem(player), itemStackList[2]);
+        player.getInventory().setItem(9, itemStackList[3]);
     }
 }

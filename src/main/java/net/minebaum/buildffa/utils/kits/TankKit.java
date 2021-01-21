@@ -2,6 +2,7 @@ package net.minebaum.buildffa.utils.kits;
 
 import net.minebaum.baumapi.utils.ItemBuilder;
 import net.minebaum.buildffa.GameManagement;
+import net.minebaum.buildffa.utils.GagetsManager;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
@@ -40,7 +41,7 @@ public class TankKit extends Kit {
         if(SpecHandler.getSpecs().contains(player)){
             return;
         }
-        new InventorySortManager(GameManagement.getConnector()).sendItems(player, this, itemStackList[0], itemStackList[1], null, itemStackList[2]);
+        new InventorySortManager(GameManagement.getConnector()).sendItems(player, itemStackList[0], itemStackList[1], GagetsManager.getInvItem(player), itemStackList[2]);
         player.getInventory().setHelmet(new ItemBuilder(Material.CHAINMAIL_HELMET, 1, (short) 0).setDisplayname("Helm").build());
         player.getInventory().setChestplate(new ItemBuilder(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0).setDisplayname("Chestplate").build());
         player.getInventory().setLeggings(new ItemBuilder(Material.CHAINMAIL_LEGGINGS, 1, (short) 0).setDisplayname("Hose").build());

@@ -4,11 +4,9 @@ import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ActionbarAPI;
 import net.minebaum.baumapi.utils.Data;
 import net.minebaum.buildffa.GameManagement;
-import net.minebaum.buildffa.utils.GagetsManager;
-import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.LocationManager;
-import net.minebaum.buildffa.utils.ScoreboardManagerAB;
-import net.minebaum.buildffa.utils.kits.StandartKit;
+import net.minebaum.buildffa.utils.ScoreboardManager;
+import net.minebaum.buildffa.utils.mysql.SQLStats;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -20,7 +18,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MoveListener implements Listener {
 
@@ -44,17 +41,23 @@ public class MoveListener implements Listener {
                 p.teleport(LocationManager.getLocation("spawn"));
                 return;
             }
-            Player killer = p.getKiller();
+            final Player killer = p.getKiller();
             boolean didAlreadeShouted = false;
             if(killer != null && !SpecHandler.getSpecs().contains(killer)){
                 killer.sendMessage(Data.PREFIX + "§e+ 10 Coins");
                 killer.playSound(killer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 BaumAPI.getCoinsAPI().addCoins(killer, 10);
                 Bukkit.broadcastMessage(Data.PREFIX + "§e" + p.getName() + " §7wurde von §e" + killer.getName() + " §7ins leere geschubst.");
+                SQLStats.addDeaths(p.getUniqueId().toString(), 1);
+                SQLStats.addKills(killer.getUniqueId().toString(), 1);
+                ScoreboardManager.set(p);
+                ScoreboardManager.set(killer);
                 didAlreadeShouted = true;
             }
             if(!didAlreadeShouted){
                 Bukkit.broadcastMessage(Data.PREFIX + "§e" + p.getName() + " ist ins leere gefallen!");
+                ScoreboardManager.set(p);
+                SQLStats.addDeaths(p.getUniqueId().toString(), 1);
             }
             p.setMaxHealth(6);
             p.setHealth(6);
@@ -83,12 +86,11 @@ public class MoveListener implements Listener {
                 getted.add(p);
                 p.getInventory().clear();
                 GameManagement.getMainSaver().get(p).getKit().setItemStacksToInventory(p);
-                GagetsManager.setInvItem(p);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASS, 1, 1);
             }
         }else if(p.getLocation().getY() >= 195){
             if(p.getActivePotionEffects() != null){
-                for(PotionEffect pe : p.getActivePotionEffects()){
+                for(final PotionEffect pe : p.getActivePotionEffects()){
                     p.removePotionEffect(pe.getType());
                 }
             }

@@ -3,10 +3,9 @@ package net.minebaum.buildffa.listeners;
 import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ActionbarAPI;
 import net.minebaum.baumapi.utils.Data;
-import net.minebaum.buildffa.BuildFFA;
 import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.LocationManager;
-import net.minebaum.buildffa.utils.ScoreboardManagerAB;
+import net.minebaum.buildffa.utils.mysql.SQLStats;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -15,7 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Score;
 
 public class DeathsListener implements Listener {
 
@@ -40,6 +38,8 @@ public class DeathsListener implements Listener {
         if(MoveListener.getted.contains(p)){
             MoveListener.getted.remove(p);
         }
+        SQLStats.addDeaths(p.getUniqueId().toString(), 1);
+        SQLStats.addKills(killer.getUniqueId().toString(), 1);
         p.teleport(LocationManager.getLocation("spawn"));
         GameManagement.setInvItems(p);
         p.removePotionEffect(PotionEffectType.SPEED);

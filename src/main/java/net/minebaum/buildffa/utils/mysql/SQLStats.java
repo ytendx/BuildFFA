@@ -2,10 +2,17 @@ package net.minebaum.buildffa.utils.mysql;
 
 
 
+import net.minebaum.baumapi.api.GuiAPI;
+import net.minebaum.baumapi.utils.ItemBuilder;
 import net.minebaum.buildffa.GameManagement;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class SQLStats {
@@ -117,6 +124,28 @@ public class SQLStats {
             removeDeaths(uuid, deaths);
         }
     }
+
+    public static void openStatsHead(Player p) {
+        Inventory inv = new GuiAPI().fillerGUI(9,new ItemBuilder(Material.STAINED_GLASS_PANE,1 ,(short)15).setDisplayname(" ").build(),"§7GunGame §8× §cSTATS");
+        ArrayList<String> stats = new ArrayList<>();
+        Integer kills = SQLStats.getKills(p.getUniqueId().toString());
+        Integer deaths = SQLStats.getDeaths(p.getUniqueId().toString());
+        double KD = ((double) kills) / ((double)  deaths);
+        String kd = Double.valueOf(KD).toString();
+        stats.add("§7  Points §8● §7" + SQLStats.getPoints(p.getUniqueId().toString()));
+        stats.add("§7  Kills §8● §7" + kills);
+        stats.add("§7  Tode §8● §7" + deaths);
+        if(kd.length() <= 5) {
+            stats.add("§7  KD §8● §7" + kd.replace("Infinity","0").replace("NaN","0"));
+        } else {
+            stats.add("§7  KD §8● §7" + kd.substring(0,4).replace("Infinity","0").replace("NaN","0"));
+        }
+        ItemStack itemstats = new ItemBuilder(Material.NETHER_STAR,1,(short)0).setDisplayname("§7Deine Stats").setLore(stats).build();
+        inv.setItem(4,itemstats);
+        p.openInventory(inv);
+    }
+
+
     public static Integer getPoints(String uuid) {
         Integer i = 0;
         if (playerExists(uuid)) {

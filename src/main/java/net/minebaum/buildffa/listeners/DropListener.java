@@ -8,7 +8,7 @@ public class DropListener implements Listener {
 
     @EventHandler
     public void onDrop(final PlayerDropItemEvent e){
-
+        e.setCancelled(true);
     }
 
 }

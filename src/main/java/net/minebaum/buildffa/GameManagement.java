@@ -3,6 +3,7 @@ package net.minebaum.buildffa;
 import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.coinapi.Coins;
 import net.minebaum.baumapi.utils.ItemBuilder;
+import net.minebaum.baumapi.utils.Skull.Skull;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.KitInventoryMerger;
@@ -13,6 +14,9 @@ import net.minebaum.buildffa.utils.game.states.MapSwitchState;
 import net.minebaum.buildffa.utils.game.states.StatesManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
 import java.util.HashMap;
 
 public class GameManagement {
@@ -85,8 +89,18 @@ public class GameManagement {
     }
 
     public static void setInvItems(Player player){
-        player.getInventory().setItem(8, new ItemBuilder(Material.ENDER_CHEST, 1, (short) 0).setDisplayname("§eKits und Gadgets").build());
-        player.getInventory().setItem(7, new ItemBuilder(Material.REDSTONE_TORCH_ON, 1, (short) 0).setDisplayname("§cInventarsortierung").build());
+        player.getInventory().setItem(4, new ItemBuilder(Material.CHEST, 1, (short) 0).setDisplayname("§eKits und Gadgets").build());
+        player.getInventory().setItem(5, new ItemBuilder(Material.REDSTONE_TORCH_ON, 1, (short) 0).setDisplayname("§cInventarsortierung").build());
+        ItemStack stats = Skull.getPlayerSkull(player.getName());
+        ItemMeta meta = stats.getItemMeta();
+        meta.setDisplayName("§cStats §8x §7" + player.getName());
+        stats.setItemMeta(meta);
+        player.getInventory().setItem(3, stats);
+        ItemStack back = Skull.getPlayerSkull("MHF_ArrowRight");
+        ItemMeta meta2 = back.getItemMeta();
+        meta2.setDisplayName("§cZurück zur Lobby §8■▶");
+        back.setItemMeta(meta2);
+        player.getInventory().setItem(8, back);
     }
 
     public static void endServer(){

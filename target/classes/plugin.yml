@@ -5,3 +5,4 @@ commands:
   setup:
   spec:
   teaming:
+  stats:

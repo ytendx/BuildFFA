@@ -25,25 +25,15 @@ public class JoinListener implements Listener {
     public void onJoin(final PlayerJoinEvent e){
         final Player p = e.getPlayer();
         SQLStats.createPlayer(p.getUniqueId().toString());
-        ScoreboardManagerAB.setScoreboard(p);
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            ScoreboardManagerAB.updateTab(player);
-        });
-        Bukkit.getScheduler().runTaskLater(BuildFFA.getPlugin(),() -> {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                ScoreboardManagerAB.updateTab(p);
-            });
-        },20);
-        try {
-            GameManagement.getGame().getStats().createAccount(e.getPlayer());
-        }catch (Exception e1){
-            GameManagement.getGame().sCMSG("[BuildFFA] Create Stats Account failed!");
+
+        if(!e.getPlayer().hasPlayedBefore()){
+            SQLStats.addPoints(e.getPlayer().getUniqueId().toString(), 3);
         }
 
         p.getInventory().clear();
 
         if(!GagetsManager.gadget.containsKey(p)){
-            GagetsManager.gadget.put(p, null);
+            GagetsManager.gadget.put(p, GagetsManager.Gadget.MOREBLOCKS);
         }
 
         try {
@@ -70,10 +60,9 @@ public class JoinListener implements Listener {
         GameManagement.setInvItems(p);
 
         SpecHandler.update();
+        ScoreboardManager.set(p);
 
-        ScoreboardManagerAB.setScoreboard(p);
-
-        e.setJoinMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 ist BuildFFA beigetreten§8.");
+        e.setJoinMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 hat BuildFFA beigetreten§8.");
 
     }
 
@@ -83,7 +72,7 @@ public class JoinListener implements Listener {
         if(SpecHandler.getSpecs().contains(e.getPlayer())){
             SpecHandler.setSpecs(e.getPlayer());
         }
-        e.setQuitMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 ist GunGame verlassen§8.");
+        e.setQuitMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 hat BuildFFA verlassen§8.");
     }
 
     public HashMap<Player, Integer> level = new HashMap<>();

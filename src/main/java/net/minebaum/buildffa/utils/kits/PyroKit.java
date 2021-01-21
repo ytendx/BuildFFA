@@ -2,6 +2,7 @@ package net.minebaum.buildffa.utils.kits;
 
 import net.minebaum.baumapi.utils.ItemBuilder;
 import net.minebaum.buildffa.GameManagement;
+import net.minebaum.buildffa.utils.GagetsManager;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
@@ -27,6 +28,7 @@ public class PyroKit extends Kit {
         itemStackList = new ItemStack[3];
         itemStackList[0] = new ItemBuilder(Material.WOOD_SWORD, 1, (short) 0)
                 .setDisplayname("§eSchwert")
+                .setUnbreakable()
                 .addEnchantment(Enchantment.FIRE_ASPECT, 1)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES).build();
         itemStackList[1] = new ItemBuilder(Material.FLINT_AND_STEEL, 1, (short) 0)
@@ -43,7 +45,7 @@ public class PyroKit extends Kit {
         if(SpecHandler.getSpecs().contains(player)){
             return;
         }
-        new InventorySortManager(GameManagement.getConnector()).sendItems(player, this, itemStackList[0], null, itemStackList[1], itemStackList[2]);
+        new InventorySortManager(GameManagement.getConnector()).sendItems(player, itemStackList[0], itemStackList[1], GagetsManager.getInvItem(player), itemStackList[2]);
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1));
         player.getInventory().setBoots(new ItemBuilder(Material.LEATHER_BOOTS, 1, (short) 0).setUnbreakable().build());
         player.getInventory().setLeggings(new ItemBuilder(Material.LEATHER_LEGGINGS, 1, (short) 0).setUnbreakable().build());
