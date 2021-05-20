@@ -6,6 +6,7 @@ import net.minebaum.buildffa.utils.GagetsManager;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -29,7 +30,6 @@ public class PyroKit extends Kit {
         itemStackList[0] = new ItemBuilder(Material.WOOD_SWORD, 1, (short) 0)
                 .setDisplayname("§eSchwert")
                 .setUnbreakable()
-                .addEnchantment(Enchantment.FIRE_ASPECT, 1)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES).build();
         itemStackList[1] = new ItemBuilder(Material.FLINT_AND_STEEL, 1, (short) 0)
                 .setDisplayname("§cFeuerzeug")
@@ -47,9 +47,17 @@ public class PyroKit extends Kit {
         }
         new InventorySortManager(GameManagement.getConnector()).sendItems(player, itemStackList[0], itemStackList[1], GagetsManager.getInvItem(player), itemStackList[2]);
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1));
         player.getInventory().setBoots(new ItemBuilder(Material.LEATHER_BOOTS, 1, (short) 0).setUnbreakable().build());
         player.getInventory().setLeggings(new ItemBuilder(Material.LEATHER_LEGGINGS, 1, (short) 0).setUnbreakable().build());
         player.getInventory().setChestplate(new ItemBuilder(Material.LEATHER_CHESTPLATE, 1, (short) 0).setUnbreakable().build());
         player.getInventory().setHelmet(new ItemBuilder(Material.LEATHER_HELMET, 1, (short) 0).setUnbreakable().build());
+        int currentJob = net.minebaum.buildffa.utils.EventHandler.getCurrentEvent();
+        Player all = player;
+        if(currentJob == net.minebaum.buildffa.utils.EventHandler.SLOWNESS){
+                all.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999999999, 2));
+        }else if(currentJob == net.minebaum.buildffa.utils.EventHandler.JUMP_SPEED){
+                all.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+        }
     }
 }

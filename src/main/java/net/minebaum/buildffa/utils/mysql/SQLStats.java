@@ -13,9 +13,15 @@ import org.bukkit.inventory.ItemStack;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class SQLStats {
+
+    public static final HashMap<String, Integer> CACHE_KILLS = new HashMap<>();
+    public static final HashMap<String, Integer> CACHE_DEATHS = new HashMap<>();
+    public static final HashMap<String, Integer> CACHE_POINTS = new HashMap<>();
+
     public static boolean playerExists(String uuid) {
         try {
             ResultSet rs = GameManagement.getConnector().query("SELECT * FROM Stats WHERE UUID= '" + uuid + "'");
@@ -37,6 +43,8 @@ public class SQLStats {
 
     public static Integer getKills(String uuid) {
         Integer i = 0;
+        if(CACHE_KILLS.containsKey(uuid))
+            return CACHE_KILLS.get(uuid);
         if (playerExists(uuid)) {
             try {
                 ResultSet rs = GameManagement.getConnector().query("Select * FROM Stats WHERE UUID= '" + uuid + "'");
@@ -57,6 +65,13 @@ public class SQLStats {
 
     public static void setKills(String uuid, Integer kills) {
         if (playerExists(uuid)) {
+            /*if(CACHE.containsKey(uuid)){
+                CACHE.replace(uuid, CACHE.get(uuid));
+                CACHE.get(uuid).set(KILLS, kills);
+            }else{
+                CACHE.put(uuid, new ArrayList());
+                CACHE.get(uuid).set(KILLS, kills);
+            }*/
             GameManagement.getConnector().update("UPDATE Stats SET KILLS= '" + kills + "' WHERE UUID= '" + uuid + "'");
         } else {
             createPlayer(uuid);
@@ -82,6 +97,8 @@ public class SQLStats {
     public static Integer getDeaths(String uuid) {
         Integer i = 0;
         if (playerExists(uuid)) {
+            //if(CACHE.containsKey(uuid))
+                //return (Integer) CACHE.get(uuid).get(DEATHS);
             try {
                 ResultSet rs = GameManagement.getConnector().query("Select * FROM Stats WHERE UUID= '" + uuid + "'");
                 if ((!rs.next())) {
@@ -102,6 +119,13 @@ public class SQLStats {
 
     public static void setDeaths(String uuid, Integer deaths) {
         if (playerExists(uuid)) {
+            /*if(CACHE.containsKey(uuid)){
+                CACHE.replace(uuid, CACHE.get(uuid));
+                CACHE.get(uuid).set(DEATHS, deaths);
+            }else{
+                CACHE.put(uuid, new ArrayList());
+                CACHE.get(uuid).set(DEATHS, deaths);
+            }*/
             GameManagement.getConnector().update("UPDATE Stats SET DEATHS= '" + deaths + "' WHERE UUID= '" + uuid + "'");
         } else {
             createPlayer(uuid);
@@ -149,6 +173,8 @@ public class SQLStats {
     public static Integer getPoints(String uuid) {
         Integer i = 0;
         if (playerExists(uuid)) {
+            //if(CACHE.containsKey(uuid))
+            //    return (Integer) CACHE.get(uuid).get(POINTS);
             try {
                 ResultSet rs = GameManagement.getConnector().query("Select * FROM Stats WHERE UUID= '" + uuid + "'");
                 if ((!rs.next())) {
@@ -168,6 +194,13 @@ public class SQLStats {
     }
     public static void setPoints(String uuid, Integer points) {
         if (playerExists(uuid)) {
+            /*if(CACHE.containsKey(uuid)){
+                CACHE.replace(uuid, CACHE.get(uuid));
+                CACHE.get(uuid).set(POINTS, points);
+            }else{
+                CACHE.put(uuid, new ArrayList());
+                CACHE.get(uuid).set(POINTS, points);
+            }*/
             GameManagement.getConnector().update("UPDATE Stats SET POINTS= '" + points + "' WHERE UUID= '" + uuid + "'");
         } else {
             createPlayer(uuid);

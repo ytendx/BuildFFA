@@ -1,6 +1,7 @@
 package net.minebaum.buildffa.listeners;
 
 import net.minebaum.baumapi.utils.Data;
+import net.minebaum.buildffa.utils.LocationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,10 +12,10 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onDamage(final EntityDamageEvent e){
-        if(e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
+        if(!e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE) && !e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){
             e.setCancelled(true);
         }else if(e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)){
-            if(e.getEntity().getLocation().getY() >= 195){
+            if(LocationManager.isIn(e.getEntity().getLocation(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2"))){
                 e.setCancelled(true);
                 e.setDamage(0);
                 for(Player all : Bukkit.getOnlinePlayers()){

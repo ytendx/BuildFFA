@@ -34,4 +34,18 @@ public class LocationManager {
         return loc;
     }
 
+    public static boolean isIn(Location loc, Location locA, Location locB) {
+        double maxX = (locA.getX() > locB.getX()) ? locA.getX() : locB.getX();
+        double minX = (locA.getX() < locB.getX()) ? locA.getX() : locB.getX();
+        double maxY = (locA.getY() > locB.getY()) ? locA.getY() : locB.getY();
+        double minY = (locA.getY() < locB.getY()) ? locA.getY() : locB.getY();
+        double maxZ = (locA.getZ() > locB.getZ()) ? locA.getZ() : locB.getZ();
+        double minZ = (locA.getZ() < locB.getZ()) ? locA.getZ() : locB.getZ();
+        if (loc.getX() <= maxX && loc.getX() >= minX &&
+                loc.getY() <= maxY && loc.getY() >= minY &&
+                loc.getZ() <= maxZ && loc.getZ() >= minZ)
+            return true;
+        return false;
+    }
+
 }

@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
@@ -27,16 +28,7 @@ public class MoveListener implements Listener {
     @EventHandler
     public void onMove(final PlayerMoveEvent e){
         final Player p = e.getPlayer();
-        if(e.getTo().getY() >= 195 && e.getFrom().getY() <= 195 && !SpecHandler.getSpecs().contains(p)){
-            p.teleport(e.getFrom());
-            new ActionbarAPI("§cDas darfst du nicht!", p).send();
-            for(Player all : Bukkit.getOnlinePlayers()){
-                if(all.hasPermission("system.spec")){
-                    all.sendMessage(Data.PREFIX + "§cDer Spieler " + p.getName() + " versucht sich auf die Spawninsel zu buggen.");
-                }
-            }
-        }
-        if(p.getLocation().getY() <= 1){
+        if(p.getLocation().getY() <= 100){
             if(SpecHandler.getSpecs().contains(p)){
                 p.teleport(LocationManager.getLocation("spawn"));
                 return;
@@ -44,7 +36,8 @@ public class MoveListener implements Listener {
             final Player killer = p.getKiller();
             boolean didAlreadeShouted = false;
             if(killer != null && !SpecHandler.getSpecs().contains(killer)){
-                killer.sendMessage(Data.PREFIX + "§e+ 10 Coins");
+                killer.sendMessage(Data.PREFIX + "§e+ 10 Bäume");
+                SQLStats.addPoints(killer.getUniqueId().toString(), 2);
                 killer.playSound(killer.getLocation(), Sound.LEVEL_UP, 1, 1);
                 BaumAPI.getCoinsAPI().addCoins(killer, 10);
                 Bukkit.broadcastMessage(Data.PREFIX + "§e" + p.getName() + " §7wurde von §e" + killer.getName() + " §7ins leere geschubst.");
@@ -55,20 +48,21 @@ public class MoveListener implements Listener {
                 didAlreadeShouted = true;
             }
             if(!didAlreadeShouted){
-                Bukkit.broadcastMessage(Data.PREFIX + "§e" + p.getName() + " ist ins leere gefallen!");
+                new ActionbarAPI("§8« §eDu bist ins leere gefallen §8»", p).send();
                 ScoreboardManager.set(p);
                 SQLStats.addDeaths(p.getUniqueId().toString(), 1);
             }
-            p.setMaxHealth(6);
-            p.setHealth(6);
+            p.setMaxHealth(10);
+            p.setHealth(10);
             p.setFoodLevel(20);
+            p.setVelocity(new Vector(0, 0, 0));
             p.setFireTicks(0);
             p.teleport(LocationManager.getLocation("spawn"));
             p.getInventory().clear();
             GameManagement.setInvItems(p);
             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 75));
             p.playSound(p.getLocation(), Sound.NOTE_BASS, 1, 1);
-        }else if(p.getLocation().getY() <= 195){
+        }else if(!LocationManager.isIn(p.getLocation(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2"))){
             if(p.getOpenInventory().getTitle().equalsIgnoreCase("§eWähle ein Gadget >>")){
                 p.closeInventory();
             }else if(p.getOpenInventory().getTitle().equalsIgnoreCase("§eWähle ein Kit >>")){
@@ -88,7 +82,7 @@ public class MoveListener implements Listener {
                 GameManagement.getMainSaver().get(p).getKit().setItemStacksToInventory(p);
                 p.playSound(p.getLocation(), Sound.NOTE_BASS, 1, 1);
             }
-        }else if(p.getLocation().getY() >= 195){
+        }else if(LocationManager.isIn(p.getLocation(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2"))){
             if(p.getActivePotionEffects() != null){
                 for(final PotionEffect pe : p.getActivePotionEffects()){
                     p.removePotionEffect(pe.getType());

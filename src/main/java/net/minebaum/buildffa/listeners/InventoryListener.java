@@ -5,6 +5,7 @@ import net.minebaum.buildffa.GameManagement;
 import net.minebaum.buildffa.utils.GagetsManager;
 import net.minebaum.buildffa.utils.InventorySortManager;
 import net.minebaum.buildffa.utils.KitInventoryMerger;
+import net.minebaum.buildffa.utils.LocationManager;
 import net.minebaum.buildffa.utils.kits.*;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
@@ -19,6 +20,15 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void onClick(final InventoryClickEvent e){
         final Player p = (Player)e.getWhoClicked();
+        if(e.getClickedInventory() == null){
+            return;
+        }
+        if(e.getCurrentItem() == null){
+            return;
+        }
+        if(e.getInventory() == null){
+            return;
+        }
         if(e.getInventory().getTitle().equals("§cOnlinespieler")){
             e.setCancelled(true);
             final Player target = Bukkit.getPlayer(e.getCurrentItem().getItemMeta().getDisplayName());
@@ -50,7 +60,7 @@ public class InventoryListener implements Listener {
                 }
             }
         }
-        if(p.getLocation().getY() >= 195){
+        if(LocationManager.isIn(p.getLocation(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2"))){
             e.setCancelled(true);
             if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§eKits")){
                 GameManagement.getKitManager().openKitMenu(p);
@@ -64,7 +74,7 @@ public class InventoryListener implements Listener {
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§eKits und Gagets")){
                 GameManagement.getKitManager().openMenuInv(p);
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cAngel")){
-                if(p.hasPermission("system.bffa.gadget.angel")){
+                if(p.hasPermission("system.bffa.gadget.angel") || net.minebaum.buildffa.utils.EventHandler.allKits){
                     GagetsManager.gadget.replace(p, GagetsManager.Gadget.ANGEL);
                     p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget die Angel ausgewählt.");
                     p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
@@ -73,7 +83,7 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§5Enderperle")){
-                if(p.hasPermission("system.bffa.gadget.enderpearl")){
+                if(p.hasPermission("system.bffa.gadget.enderpearl") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.ENDERPERLE);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget die Enderperle ausgewählt.");
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
@@ -82,7 +92,7 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§3Speed")){
-                if(p.hasPermission("system.bffa.gadget.speed")){
+                if(p.hasPermission("system.bffa.gadget.speed") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.SPEED);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget Speed ausgewählt.");
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
@@ -91,7 +101,7 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§fAngreiferKit")){
-                if(p.hasPermission("system.bffa.kit.angreifer")){
+                if(p.hasPermission("system.bffa.kit.angreifer") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new AngreiferKit().setup());
                 }else{
@@ -104,7 +114,7 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cPyroKit")){
-                if(p.hasPermission("system.bffa.kit.pyro")){
+                if(p.hasPermission("system.bffa.kit.pyro") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new PyroKit().setup());
                 }else{
@@ -117,7 +127,7 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§3SpäherKit")){
-                if(p.hasPermission("system.bffa.kit.späher")){
+                if(p.hasPermission("system.bffa.kit.späher") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new SpäherKit().setup());
                 }else{
@@ -130,16 +140,16 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("§fSchne")){
-                if(p.hasPermission("system.bffa.kit.schneeball")){
+                if(p.hasPermission("system.bffa.gadget.schneeball") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 GagetsManager.gadget.replace(p, GagetsManager.Gadget.SNOWBALL);
                 p.sendMessage(Data.PREFIX + "§7Du hast nun als Gagdget Schneebälle ausgewählt.");
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
                 }else{
                     p.closeInventory();
-                    p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
+                    p.sendTitle("", "§cDu besitzt dieses Gadget nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§eStandartkit")){
-                if(p.hasPermission("system.bffa.kit.standart")){
+                if(p.hasPermission("system.bffa.kit.standart") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new StandartKit().setup());
                 }else{
@@ -152,7 +162,7 @@ public class InventoryListener implements Listener {
                     p.sendTitle("", "§cDu besitzt dieses Kit nicht! §eKaufe dir Gadgets in der Lobby!");
                 }
             }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§bTankKit")){
-                if(p.hasPermission("system.bffa.kit.standart")){
+                if(p.hasPermission("system.bffa.kit.tank") || net.minebaum.buildffa.utils.EventHandler.allKits){
                 if(GameManagement.getMainSaver().containsKey(p)){
                     GameManagement.getMainSaver().get(p).setKit(new TankKit().setup());
                 }else{

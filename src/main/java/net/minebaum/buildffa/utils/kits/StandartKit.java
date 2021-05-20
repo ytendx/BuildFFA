@@ -11,6 +11,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,13 @@ public class StandartKit extends Kit {
     public void setItemStacksToInventory(Player player) {
         if(SpecHandler.getSpecs().contains(player)){
             return;
+        }
+        int currentJob = net.minebaum.buildffa.utils.EventHandler.getCurrentEvent();
+        Player all = player;
+        if(currentJob == net.minebaum.buildffa.utils.EventHandler.SLOWNESS){
+            all.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999999999, 2));
+        }else if(currentJob == net.minebaum.buildffa.utils.EventHandler.JUMP_SPEED){
+            all.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
         }
         new InventorySortManager(GameManagement.getConnector()).sendItems(player, itemStackList[0], itemStackList[1], GagetsManager.getInvItem(player), itemStackList[2]);
     }

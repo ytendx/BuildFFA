@@ -4,8 +4,6 @@ import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.coinapi.Coins;
 import net.minebaum.baumapi.utils.ItemBuilder;
 import net.minebaum.baumapi.utils.Skull.Skull;
-import net.minebaum.buildffa.utils.InventorySortManager;
-import net.minebaum.buildffa.utils.Kit;
 import net.minebaum.buildffa.utils.KitInventoryMerger;
 import net.minebaum.buildffa.utils.KitManager;
 import net.minebaum.buildffa.utils.game.*;
@@ -88,7 +86,12 @@ public class GameManagement {
         g.setCurrentGameState(gameStates[StatesManager.INGAME_STATE]);
     }
 
-    public static void setInvItems(Player player){
+    public static void setInvItems(final Player player){
+        player.getInventory().clear();
+        player.getInventory().setHelmet(new ItemStack(Material.AIR));
+        player.getInventory().setChestplate(new ItemStack(Material.AIR));
+        player.getInventory().setLeggings(new ItemStack(Material.AIR));
+        player.getInventory().setBoots(new ItemStack(Material.AIR));
         player.getInventory().setItem(4, new ItemBuilder(Material.CHEST, 1, (short) 0).setDisplayname("§eKits und Gadgets").build());
         player.getInventory().setItem(5, new ItemBuilder(Material.REDSTONE_TORCH_ON, 1, (short) 0).setDisplayname("§cInventarsortierung").build());
         ItemStack stats = Skull.getPlayerSkull(player.getName());
@@ -96,7 +99,7 @@ public class GameManagement {
         meta.setDisplayName("§cStats §8x §7" + player.getName());
         stats.setItemMeta(meta);
         player.getInventory().setItem(3, stats);
-        ItemStack back = Skull.getPlayerSkull("MHF_ArrowRight");
+        ItemStack back = new ItemBuilder(Material.SLIME_BALL, 1, (short) 0).build();
         ItemMeta meta2 = back.getItemMeta();
         meta2.setDisplayName("§cZurück zur Lobby §8■▶");
         back.setItemMeta(meta2);

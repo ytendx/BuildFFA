@@ -2,6 +2,7 @@ package net.minebaum.buildffa.listeners;
 
 import net.minebaum.baumapi.api.ActionbarAPI;
 import net.minebaum.baumapi.utils.Data;
+import net.minebaum.buildffa.utils.LocationManager;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ public class TeleportListener implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent e){
         if(e.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)){
-            if(e.getFrom().getY() <= 195D && e.getTo().getY() >= 195D){
+            if(!LocationManager.isIn(e.getFrom(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2")) && LocationManager.isIn(e.getTo(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2"))){
                 if(!SpecHandler.getSpecs().contains(e.getPlayer())){
                     e.setCancelled(true);
                     e.getPlayer().teleport(e.getFrom());

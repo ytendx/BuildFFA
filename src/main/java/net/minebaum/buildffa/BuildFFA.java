@@ -4,11 +4,9 @@ import net.minebaum.baumapi.BaumAPI;
 import net.minebaum.baumapi.api.ActionbarAPI;
 import net.minebaum.baumapi.coinapi.Coins;
 import net.minebaum.baumapi.utils.Data;
-import net.minebaum.buildffa.commands.COMMAND_Setup;
-import net.minebaum.buildffa.commands.COMMAND_Spec;
-import net.minebaum.buildffa.commands.COMMAND_Teaming;
-import net.minebaum.buildffa.commands.Stats;
+import net.minebaum.buildffa.commands.*;
 import net.minebaum.buildffa.listeners.*;
+import net.minebaum.buildffa.utils.EventHandler;
 import net.minebaum.buildffa.utils.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -49,7 +47,6 @@ public class BuildFFA extends JavaPlugin {
         coins = new Coins(BaumAPI.getPlugin());
         coins.setupMySQL("mok13820", "Ce6xNmK1O1theJAk", "web7447.cweb03.gamingweb.de", 3306, "coinapi");
         coins.setup(0);
-
         this.getServer().getConsoleSender().sendMessage("[BuildFFA] Plugin Enabled!");
 
         Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
@@ -74,7 +71,10 @@ public class BuildFFA extends JavaPlugin {
                 }
             }
         }, 0, 40);
+        new EventHandler();
         GameManagement.getConnector().update("CREATE TABLE IF NOT EXISTS Stats(UUID varchar(65), KILLS int,DEATHS int,POINTS int);");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule announceAdvancements false");
     }
 
     private void register() {
@@ -103,6 +103,7 @@ public class BuildFFA extends JavaPlugin {
         getCommand("spec").setExecutor(new COMMAND_Spec());
         getCommand("teaming").setExecutor(new COMMAND_Teaming());
         getCommand("stats").setExecutor(new Stats());
+        getCommand("fix").setExecutor(new FixCommand());
     }
 
     private String news(int count){
@@ -113,7 +114,7 @@ public class BuildFFA extends JavaPlugin {
         }else if(count == 2){
             return Data.PREFIX + "§eKaufe dir Kits in der Lobby! §8-> §e/shop";
         }else if(count == 3){
-            return Data.PREFIX + "§cAchtung Achtung! §7Gadgets sind ein einmaliges Item!";
+            return Data.PREFIX + "§cSpammt nicht mit Bögen!";
         }else if(count == 4){
             return Data.PREFIX + "§cDer Versuch von Bugusing ist verboten und wird bestraft!";
         }else{

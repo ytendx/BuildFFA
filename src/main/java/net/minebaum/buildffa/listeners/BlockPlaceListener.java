@@ -1,6 +1,7 @@
 package net.minebaum.buildffa.listeners;
 
 import net.minebaum.buildffa.BuildFFA;
+import net.minebaum.buildffa.utils.LocationManager;
 import net.minebaum.buildffa.utils.spectators.SpecHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,7 +26,7 @@ public class BlockPlaceListener implements Listener {
             e.setBuild(false);
             e.setCancelled(true);
         }
-        if(p.getLocation().getY() >= 195){
+        if(LocationManager.isIn(p.getLocation(), LocationManager.getLocation("pos1"), LocationManager.getLocation("pos2"))){
             e.setBuild(false);
         }else{
             Location loc = e.getBlock().getLocation();

@@ -38,7 +38,6 @@ public class SpecHandler {
                     all.hidePlayer(specs);
                 }
             }
-            Bukkit.broadcastMessage("§8[§c-§8] §7" + player.getName());
             player.setAllowFlight(true);
             player.setFlying(true);
             player.getInventory().clear();
@@ -53,7 +52,6 @@ public class SpecHandler {
             for(Player all : Bukkit.getOnlinePlayers()){
                 all.showPlayer(player);
             }
-            Bukkit.broadcastMessage("§8[§a+§8] §7" + player.getName());
             player.teleport(LocationManager.getLocation("spawn"));
             player.getInventory().clear();
             player.setAllowFlight(false);

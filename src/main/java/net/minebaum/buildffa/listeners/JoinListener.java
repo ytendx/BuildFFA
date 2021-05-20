@@ -15,6 +15,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,14 +55,32 @@ public class JoinListener implements Listener {
         }
 
 
-        p.setMaxHealth(6);
-        p.setHealth(6);
+        p.setMaxHealth(10);
+        p.setHealth(10);
         p.setFoodLevel(20);
 
         GameManagement.setInvItems(p);
 
         SpecHandler.update();
         ScoreboardManager.set(p);
+
+        int currentJob = net.minebaum.buildffa.utils.EventHandler.getCurrentEvent();
+
+        if(currentJob == net.minebaum.buildffa.utils.EventHandler.SLOWNESS){
+            for(Player all : Bukkit.getOnlinePlayers()){
+                all.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999999999, 2));
+            }
+            p.sendMessage(Data.PREFIX + "§cJetziges Event §8» §eSlowness");
+        }else if(currentJob == net.minebaum.buildffa.utils.EventHandler.JUMP_SPEED){
+            for(Player all : Bukkit.getOnlinePlayers()){
+                all.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+            }
+            p.sendMessage(Data.PREFIX + "§cJetziges Event §8» §eSprungkraft");
+        }else if(currentJob == net.minebaum.buildffa.utils.EventHandler.ALL_KITS){
+            p.sendMessage(Data.PREFIX + "§cJetziges Event §8» §eAlle Kits im Besitz");
+        }else{
+            p.sendMessage(Data.PREFIX + "§cJetziges Event §8» §c- Noch nicht gestartet! -");
+        }
 
         e.setJoinMessage(Data.PREFIX + "§7Der Spieler §e" + e.getPlayer().getDisplayName() + "§7 hat BuildFFA beigetreten§8.");
 
